@@ -5,51 +5,24 @@ interface ListProps {
 }
 
 export const Container = styled.nav`
-  background: linear-gradient(
-    90deg,
-    rgb(110, 94, 254) 0%,
-    rgba(73, 63, 252, 1) 100%
-  );
-  position: fixed;
-  left: 0;
+  display: flex;
+  position: absolute;
   top: 0;
   width: 100%;
   height: 80px;
-  display: flex;
-  justify-content: space-around;
+  background: #283336;
   align-items: center;
   font-size: 1.2rem;
-
-  button {
-    padding: 8px 20px;
-    border-radius: 4px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-      padding: 8px 20px;
-      transition: all 0.3s ease-out;
-      background: #fff;
-      color: #6568f4;
-      transition: 250ms;
-    }
 
     @media screen and (max-width: 844px) {
       display: block;
       text-align: center;
       padding: 1.5rem;
-      margin: 2rem auto;
-      border-radius: 4px;
-      width: 80%;
-      background: #4ad9e4;
       text-decoration: none;
       color: #fff;
       font-size: 1.5rem;
 
       &:hover {
-        background: #fff;
-        color: #6568f4;
         transition: 250ms;
       }
     }
@@ -68,8 +41,6 @@ export const List = styled.ul<ListProps>`
   margin: 0 auto;
   list-style: none;
   text-align: center;
-  width: inherit;
-  justify-content: space-around;
 
   li {
     a {
@@ -94,32 +65,22 @@ export const List = styled.ul<ListProps>`
           border-radius: 0;
         }
       }
-
-      &::after {
-        display: none;
-      }
     }
   }
 
   @media screen and (max-width: 844px) {
-    display: flex;
+    display: none;
     flex-direction: column;
-    width: 100%;
-    height: 500px;
     position: absolute;
+    width: 100%;
     top: 80px;
-    left: 100%;
-    opacity: 1;
-    transition: all 0.5s ease;
 
     ${props =>
       props.isClicked &&
       css`
-        background: #6668f4;
+        display: flex;
+        background: #283336;
         left: 0%;
-        opacity: 1;
-        transition: all 0.5s ease;
-        z-index: 1;
       `}
   }
 `;
