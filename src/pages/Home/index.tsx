@@ -1,10 +1,15 @@
 import React from 'react';
+import Header from '../../components/Header';
 // import api from '../../services/api';
 
-import { Title } from './styles';
+import { Container, Title } from './styles';
 
 const Home: React.FC = () => {
-  return <Title>Hello World!</Title>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 
 export default Home;
