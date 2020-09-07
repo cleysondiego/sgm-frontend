@@ -1,23 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 40px 30px;
-  background: radial-gradient(
-    circle,
-    rgba(92, 39, 251, 1) 0%,
-    rgba(112, 71, 247, 1) 100%
-  );
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-
-  display: flex;
+  display: block;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
-  max-width: 1000px;
-  height: auto;
-  margin: 0 auto;
+
+  padding: 20px 10px;
+  background: #283336;
+  width: 100%;
 
   h5 {
     display: block;
@@ -34,7 +25,6 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-left: 60px;
 `;
 
 export const Row = styled.div`
