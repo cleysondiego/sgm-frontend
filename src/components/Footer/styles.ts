@@ -9,6 +9,10 @@ export const Container = styled.div`
   align-items: center;
   padding: 20px 10px;
   background: #283336;
+
+  @media screen and (max-width: 877px) {
+    position: relative;
+  }
 `;
 
 export const FooterStyled = styled.footer`
@@ -18,6 +22,10 @@ export const FooterStyled = styled.footer`
     color: #fff;
     font-size: 1em;
     margin-top: 1em;
+
+    @media screen and (max-width: 877px) {
+      text-align: center;
+    }
   }
 `;
 
@@ -27,6 +35,10 @@ export const Row = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+
+  @media screen and (max-width: 877px) {
+    flex-direction: column;
+  }
 `;
 
 export const Column = styled.div`
@@ -40,6 +52,10 @@ export const Column = styled.div`
     color: #fff;
     margin-bottom: 40px;
     font-weight: bold;
+
+    @media screen and (max-width: 877px) {
+      margin-bottom: 10px;
+    }
   }
 
   a {
@@ -60,5 +76,9 @@ export const Column = styled.div`
       font-size: 18;
       margin-right: 16px;
     }
+  }
+
+  @media screen and (max-width: 877px) {
+    margin: 15px 0;
   }
 `;
