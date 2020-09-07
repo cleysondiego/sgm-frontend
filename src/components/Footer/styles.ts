@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   align-items: center;
   padding: 20px 10px;
   background: #283336;
@@ -40,6 +43,9 @@ export const Column = styled.div`
   }
 
   a {
+    display: flex;
+    align-items: center;
+    align-self: center;
     color: #fff;
     margin-bottom: 20px;
     font-size: 18px;

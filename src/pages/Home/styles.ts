@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  position: relative;
+  min-height: 100vh;
+`;
 
 export const Title = styled.h1`
   font-size: 48px;
@@ -9,4 +12,6 @@ export const Title = styled.h1`
 
 export const Content = styled.div`
   max-width: 1500px;
+  padding-top: 80px;
+  padding-bottom: 278px;
 `;
