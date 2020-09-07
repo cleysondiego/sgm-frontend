@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+export const Container = styled.div``;
 
 export const Title = styled.h1`
   font-size: 48px;
@@ -11,5 +8,5 @@ export const Title = styled.h1`
 `;
 
 export const Content = styled.div`
-  flex: 2;
+  max-width: 1500px;
 `;
