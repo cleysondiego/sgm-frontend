@@ -61,14 +61,15 @@ export const Container = styled.nav`
 `;
 
 export const List = styled.ul<ListProps>`
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  grid-gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: auto;
+  margin: 0 auto;
   list-style: none;
   text-align: center;
-  width: max-content;
+  width: inherit;
   justify-content: space-around;
-  margin-right: 2rem;
 
   li {
     a {

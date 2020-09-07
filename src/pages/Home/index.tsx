@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 // import api from '../../services/api';
-
-import { Container, Title } from './styles';
 
 const Home: React.FC = () => {
   return (
     <>
       <Header />
+      <Footer />
     </>
   );
 };

@@ -28,7 +28,6 @@ const Header: React.FC = () => {
       <MenuButton onClick={handleClick}>
         {isClicked ? <FaTimes /> : <FaBars />}
       </MenuButton>
-      <button type="submit">Entrar</button>
     </Container>
   );
 };
