@@ -14,4 +14,8 @@ export const Content = styled.div`
   max-width: 1500px;
   padding-top: 80px;
   padding-bottom: 278px;
+
+  @media screen and (max-width: 844px) {
+    padding-top: 0;
+  }
 `;
