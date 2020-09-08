@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header';
-import { Container, Content } from './styles';
+import { Container, Body, Content } from './styles';
 import Footer from '../../components/Footer';
 // import api from '../../services/api';
 
@@ -8,46 +8,30 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Header />
-      <Content>
-        <h1>HTML Ipsum Presents</h1>
-
-        <p>
-          <strong>Pellentesque habitant morbi tristique</strong> senectus et
-          netus et malesuada fames ac turpis egestas. Vestibulum tortor quam,
-          feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero
-          sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em>{' '}
-          Mauris placerat eleifend leo. Quisque sit amet est et sapien
-          ullamcorper pharetra. Vestibulum erat wisi, condimentum sed,{' '}
-          <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum,
-          elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis
-          tempus lacus enim ac dui. <a href="/">Donec non enim</a> in turpis
-          pulvinar facilisis. Ut felis.
-        </p>
-
-        <h2>Header Level 2</h2>
-
-        <ol>
-          <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-          <li>Aliquam tincidunt mauris eu risus.</li>
-        </ol>
-
-        <blockquote>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-            magna. Cras in mi at felis aliquet congue. Ut a est eget ligula
-            molestie gravida. Curabitur massa. Donec eleifend, libero at
-            sagittis mollis, tellus est malesuada tellus, at luctus turpis elit
-            sit amet quam. Vivamus pretium ornare est.
-          </p>
-        </blockquote>
-
-        <h3>Header Level 3</h3>
-
-        <ul>
-          <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-          <li>Aliquam tincidunt mauris eu risus.</li>
-        </ul>
-      </Content>
+      <Body>
+        <Content>
+          <div>
+            <h1>O que é monitoria?</h1>
+            <p>
+              A monitoria é um programa implementado por faculdades e
+              universidades com o intuito de melhorar o desempenho do estudante
+              e diminuir o nível de reprovações em uma determinada disciplina.
+            </p>
+            <a
+              href="http://www.fatecid.com.br/site/index.php/programa-de-monitoria-de-disciplina-e-iniciacao-cientifica/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Saiba mais
+            </a>
+          </div>
+          <img
+            src="https://cdn.pixabay.com/photo/2017/05/03/22/08/book-2282303_1280.png"
+            width="600"
+            height="600"
+          />
+        </Content>
+      </Body>
       <Footer />
     </Container>
   );
