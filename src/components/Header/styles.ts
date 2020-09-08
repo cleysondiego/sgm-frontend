@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { shade } from 'polished';
 
 interface ListProps {
   isClicked: boolean;
@@ -44,24 +45,26 @@ export const List = styled.ul<ListProps>`
 
   li {
     a {
+      font-size: 24px;
+      color: #fff;
+      font-weight: bold;
       color: white;
       text-decoration: none;
       padding: 0.5rem 1rem;
 
       &:hover {
-        background-color: #6d76f7;
+        background-color: ${shade(0.2, '#283336')};
         border-radius: 4px;
         transition: all 0.2s case-out;
       }
 
       @media screen and (max-width: 844px) {
         text-align: center;
-        padding: 2rem;
         width: 100%;
         display: table;
 
         &:hover {
-          background-color: #7577fa;
+          background-color: ${shade(0.2, '#283336')};
           border-radius: 0;
         }
       }
