@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
   display: flex;
@@ -16,16 +17,15 @@ export const Container = styled.div`
 `;
 
 export const FooterStyled = styled.footer`
-  flex: 0;
-
   h5 {
     color: #fff;
     font-size: 1em;
-    margin-top: 1em;
+    text-align: center;
+  }
 
-    @media screen and (max-width: 877px) {
-      text-align: center;
-    }
+  hr {
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 `;
 
@@ -36,7 +36,7 @@ export const Row = styled.div`
   justify-content: center;
   text-align: center;
 
-  @media screen and (max-width: 877px) {
+  @media screen and (max-width: 487px) {
     flex-direction: column;
   }
 `;
@@ -50,7 +50,7 @@ export const Column = styled.div`
   h3 {
     font-size: 24px;
     color: #fff;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-weight: bold;
 
     @media screen and (max-width: 877px) {
@@ -63,12 +63,12 @@ export const Column = styled.div`
     align-items: center;
     align-self: center;
     color: #fff;
-    margin-bottom: 20px;
+    padding: 0.5rem 1rem;
     font-size: 18px;
     text-decoration: none;
 
     &:hover {
-      color: #ff9c00;
+      background-color: ${shade(0.2, '#283336')};
       transition: 200ms ease-in;
     }
 
@@ -80,5 +80,24 @@ export const Column = styled.div`
 
   @media screen and (max-width: 877px) {
     margin: 15px 0;
+  }
+`;
+
+export const GroupColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  @media screen and (max-width: 877px) {
+    flex-direction: column;
+
+    &:first-child {
+      margin-right: 100px;
+    }
+  }
+
+  @media screen and (max-width: 487px) {
+    &:first-child {
+      margin-right: 0;
+    }
   }
 `;
