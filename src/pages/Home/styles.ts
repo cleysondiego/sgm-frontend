@@ -13,9 +13,10 @@ export const Title = styled.h1`
 export const Content = styled.div`
   max-width: 1500px;
   padding-top: 80px;
-  padding-bottom: 278px;
+  padding-bottom: 272px;
 
   @media screen and (max-width: 844px) {
     padding-top: 0;
+    padding-bottom: 0;
   }
 `;
