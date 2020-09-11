@@ -37,8 +37,8 @@ export const Container = styled.nav`
 export const List = styled.ul<ListProps>`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  height: auto;
+  justify-content: space-around;
+  width: 1500px;
   margin: 0 auto;
   list-style: none;
   text-align: center;
