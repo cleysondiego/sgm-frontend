@@ -17,6 +17,11 @@ export const Container = styled.div`
 `;
 
 export const FooterStyled = styled.footer`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 1500px;
+
   h5 {
     color: #fff;
     font-size: 1em;
@@ -33,7 +38,7 @@ export const Row = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   text-align: center;
 
   @media screen and (max-width: 487px) {
@@ -86,6 +91,8 @@ export const Column = styled.div`
 export const GroupColumn = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  width: 750px;
 
   @media screen and (max-width: 877px) {
     flex-direction: column;
