@@ -1,8 +1,11 @@
 import React from 'react';
+
 import Header from '../../components/Header';
-import { Container, Body, Content } from './styles';
 import Footer from '../../components/Footer';
-// import api from '../../services/api';
+
+import HomeImage from '../../assets/home.png';
+
+import { Container, Body, Content } from './styles';
 
 const Home: React.FC = () => {
   return (
@@ -26,7 +29,8 @@ const Home: React.FC = () => {
             </a>
           </div>
           <img
-            src="https://cdn.pixabay.com/photo/2017/05/03/22/08/book-2282303_1280.png"
+            src={HomeImage}
+            alt="Book of Knowledge"
             width="600"
             height="600"
           />
