@@ -11,8 +11,6 @@ export const Title = styled.h1`
 `;
 
 export const Body = styled.div`
-  width: 100%;
-  height: 100%;
   padding-top: 80px;
   padding-bottom: 263px;
   display: flex;
@@ -23,9 +21,9 @@ export const Body = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: row;
-  max-width: 1500px;
+  width: 1500px;
   text-align: center;
-  justify-content: center;
+  justify-content: space-around;
 
   div {
     display: flex;
@@ -44,11 +42,16 @@ export const Content = styled.div`
   }
 
   a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #283336;
     color: #fff;
     border-radius: 16px;
     font-size: 40px;
+    height: 80px;
     text-align: center;
+    text-decoration: none;
   }
 
   img {
