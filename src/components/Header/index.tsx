@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           <Link to="/schedule">Agenda de Monitorias</Link>
         </li>
         <li>
-          <Link to="/">Seja um Monitor</Link>
+          <Link to="/monitor">Seja um Monitor</Link>
         </li>
         <li>
           <Link to="/login">Entrar</Link>
