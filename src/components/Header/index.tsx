@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+
 import { FaTimes, FaBars } from 'react-icons/fa';
 import { Container, List, MenuButton } from './styles';
 
@@ -13,16 +15,16 @@ const Header: React.FC = () => {
     <Container>
       <List isClicked={isClicked}>
         <li>
-          <a href="/home">Página Inicial</a>
+          <Link to="/">Página Inicial</Link>
         </li>
         <li>
-          <a href="/home">Agenda de Monitorias</a>
+          <Link to="/schedule">Agenda de Monitorias</Link>
         </li>
         <li>
-          <a href="/home">Seja um Monitor</a>
+          <Link to="/">Seja um Monitor</Link>
         </li>
         <li>
-          <a href="/home">Entrar</a>
+          <Link to="/login">Entrar</Link>
         </li>
       </List>
       <MenuButton onClick={handleClick}>
