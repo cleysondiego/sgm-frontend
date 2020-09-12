@@ -18,13 +18,13 @@ const Header: React.FC = () => {
           <Link to="/">Página Inicial</Link>
         </li>
         <li>
-          <Link to="/agenda">Agenda de Monitorias</Link>
+          <Link to="/schedule">Agenda de Monitorias</Link>
         </li>
         <li>
           <Link to="/">Seja um Monitor</Link>
         </li>
         <li>
-          <Link to="/entrar">Entrar</Link>
+          <Link to="/login">Entrar</Link>
         </li>
       </List>
       <MenuButton onClick={handleClick}>
