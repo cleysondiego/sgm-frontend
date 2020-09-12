@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
@@ -19,6 +19,26 @@ export const Content = styled.div`
   width: 1500px;
   text-align: center;
   justify-content: space-around;
+`;
+
+const appearFromLeft = keyframes`
+from{
+  opacity: 0;
+  transform: translateX(-50px);
+}
+to{
+  opacity: 1;
+  transform: translateX(0);
+}
+`;
+
+export const AnimatedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 1500px;
+  text-align: center;
+  justify-content: space-around;
+  animation: ${appearFromLeft} 1s;
 
   div {
     display: flex;
@@ -54,12 +74,13 @@ export const Content = styled.div`
 
   td {
     font-size: 25px;
-    height: 200px;
+    min-width: 190px;
     vertical-align: bottom;
 
     &:first-child {
       font-size: 30px;
       font-weight: bold;
+      min-width: 0;
       vertical-align: middle;
     }
   }
