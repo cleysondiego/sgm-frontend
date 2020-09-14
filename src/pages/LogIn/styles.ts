@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { shade } from 'polished';
 
 export const Container = styled.div`
   position: relative;
@@ -10,37 +11,11 @@ export const Title = styled.h1`
   color: #3a3a3a;
 `;
 
-export const Body = styled.div`
-  padding-top: 80px;
-  padding-bottom: 263px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Content = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
-  }
-`;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: row;
-  margin: auto;
-  margin-top: 10px;
-  align-items: center;
-
-  h2 {
-    font-size: 30px;
-  }
-
-  input {
-    margin: 15px;
-  }
+  padding-top: 80px;
+  padding-bottom: 263px;
 `;
 
 const appearFromLeft = keyframes`
@@ -57,36 +32,33 @@ to{
 export const AnimatedContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
+  align-items: center;
+  place-content: center;
+
+  width: 100%;
+
   animation: ${appearFromLeft} 1s;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin: auto;
+  form {
+    margin: 80px 0;
+    width: 340px;
+    text-align: center;
+
+    h1 {
+      margin-bottom: 24px;
+    }
 
     a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #283336;
-      color: #fff;
-      border-radius: 16px;
-      font-size: 20px;
-      height: 60px;
-      text-align: center;
+      color: #232129;
+      display: block;
+      margin-top: 24px;
       text-decoration: none;
-      margin-top: 15px;
-    }
-  }
+      transition: color 0.2s;
 
-  h1 {
-    margin-top: 35px;
-    margin-bottom: 35px;
-    font-size: 60px;
+      &:hover {
+        color: ${shade(0.2, '#232129')};
+      }
+    }
   }
 
   @media screen and (max-width: 844px) {
