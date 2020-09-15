@@ -1,5 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+
+import Route from './Route';
 
 import Home from '../pages/Home';
 import MonitoringSchedule from '../pages/MonitoringSchedule';
@@ -15,7 +17,7 @@ const Routes: React.FC = () => (
     <Route path="/monitor" component={Monitor} />
     <Route path="/login" component={LogIn} />
 
-    <Route path="/dashboard" component={Dashboard} />
+    <Route path="/dashboard" component={Dashboard} isPrivate />
   </Switch>
 );
 
