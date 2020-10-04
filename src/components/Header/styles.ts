@@ -10,22 +10,21 @@ export const Container = styled.nav`
   position: absolute;
   top: 0;
   width: 100%;
-  height: 80px;
+  height: 64px;
   background: #283336;
   align-items: center;
   font-size: 1.2rem;
 
-    @media screen and (max-width: 844px) {
-      display: block;
-      text-align: center;
-      padding: 1.5rem;
-      text-decoration: none;
-      color: #fff;
-      font-size: 1.5rem;
+  @media screen and (max-width: 844px) {
+    display: block;
+    text-align: center;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5rem;
 
-      &:hover {
-        transition: 250ms;
-      }
+    &:hover {
+      transition: 250ms;
     }
   }
 
@@ -45,7 +44,7 @@ export const List = styled.ul<ListProps>`
 
   li {
     a {
-      font-size: 24px;
+      font-size: 20px;
       color: #fff;
       font-weight: bold;
       color: white;
