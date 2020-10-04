@@ -40,11 +40,11 @@ export const AnimatedContainer = styled.div`
   justify-content: space-around;
   animation: ${appearFromLeft} 1s;
 
-  div {
+  /* div {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-  }
+  } */
 
   h1 {
     margin-top: 35px;
@@ -63,6 +63,22 @@ export const AnimatedContainer = styled.div`
     height: 80px;
     text-align: center;
     text-decoration: none;
+  }
+
+  form div {
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    margin: 20px 15px 0 0;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+
+    div {
+      margin-top: 0;
+    }
   }
 
   @media screen and (max-width: 844px) {
