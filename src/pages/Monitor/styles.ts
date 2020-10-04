@@ -40,18 +40,6 @@ export const AnimatedContainer = styled.div`
   justify-content: space-around;
   animation: ${appearFromLeft} 1s;
 
-  /* div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  } */
-
-  h1 {
-    margin-top: 35px;
-    margin-bottom: 35px;
-    font-size: 60px;
-  }
-
   a {
     display: flex;
     justify-content: center;
@@ -63,6 +51,11 @@ export const AnimatedContainer = styled.div`
     height: 80px;
     text-align: center;
     text-decoration: none;
+  }
+
+  form h1 {
+    margin-bottom: 35px;
+    font-size: 30px;
   }
 
   form div {
@@ -79,6 +72,20 @@ export const AnimatedContainer = styled.div`
     div {
       margin-top: 0;
     }
+  }
+
+  form button {
+    font-size: 20px;
+  }
+
+  form select {
+    flex: 1;
+    font-size: 16px;
+    padding: 2px;
+
+    color: #232129;
+    border: 2px solid #232129;
+    border-radius: 10px;
   }
 
   @media screen and (max-width: 844px) {

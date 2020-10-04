@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useCallback, useEffect, useState } from 'react';
 import { Form } from '@unform/web';
 import {
   FiBookOpen,
@@ -10,14 +9,62 @@ import {
   FiPhone,
   FiUser,
 } from 'react-icons/fi';
+
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-
-import { Container, Body, Content, AnimatedContainer } from './styles';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
+import { Container, Body, Content, AnimatedContainer } from './styles';
+import api from '../../services/api';
+
+interface Monitoring {
+  id: string;
+  name: string;
+  isAvailable: boolean;
+  teacher: {
+    id: string;
+    name: string;
+  };
+}
+
+interface Teacher {
+  id: string;
+  name: string;
+}
+
 const Monitor: React.FC = () => {
+  const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
+  const [selectedMonitoring, setSelectedMonitoring] = useState<Monitoring>(
+    {} as Monitoring,
+  );
+  const [teacher, setTeacher] = useState<Teacher>({} as Teacher);
+
+  useEffect(() => {
+    api.get('monitoring').then(response => {
+      setMonitorings(response.data);
+      setTeacher(response.data[0].teacher);
+    });
+  }, [monitorings]);
+
+  // const handleSubmit = useCallback(async data => {
+  //   const response = await api.post('', data);
+  // }, []);
+
+  const handleSelect = useCallback(
+    event => {
+      const monitoringSelected = monitorings.find(
+        monitoring => monitoring.id === event.target.value,
+      );
+
+      if (monitoringSelected) {
+        setSelectedMonitoring(monitoringSelected);
+        setTeacher(monitoringSelected?.teacher);
+      }
+    },
+    [monitorings],
+  );
+
   return (
     <Container>
       <Header />
@@ -32,17 +79,20 @@ const Monitor: React.FC = () => {
               <h1>Seja um Monitor</h1>
 
               <div>
-                <Input
-                  name="disciplina"
-                  icon={FiBookOpen}
-                  placeholder="Disciplina"
-                  disabled
-                />
+                <div>
+                  <select value={selectedMonitoring.id} onChange={handleSelect}>
+                    {monitorings.map(monitoring => (
+                      <option key={monitoring.id} value={monitoring.id}>
+                        {monitoring.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <Input
                   name="professor"
                   icon={FiBookOpen}
-                  placeholder="Professor"
+                  placeholder={teacher.name}
                   disabled
                 />
               </div>
