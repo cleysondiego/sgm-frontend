@@ -7,6 +7,8 @@ import Home from '../pages/Home';
 import MonitoringSchedule from '../pages/MonitoringSchedule';
 import Monitor from '../pages/Monitor';
 import LogIn from '../pages/LogIn';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 import Dashboard from '../pages/Dashboard';
 
@@ -16,6 +18,8 @@ const Routes: React.FC = () => (
     <Route path="/schedule" component={MonitoringSchedule} />
     <Route path="/monitor" component={Monitor} />
     <Route path="/login" component={LogIn} />
+    <Route path="/forgot_password" component={ForgotPassword} />
+    <Route path="/reset_password" component={ResetPassword} />
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
   </Switch>
