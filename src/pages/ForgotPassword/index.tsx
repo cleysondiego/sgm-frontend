@@ -14,6 +14,7 @@ import Input from '../../components/Input';
 import { Container, Content, AnimatedContainer } from './styles';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useToast } from '../../hooks/toast';
 
 interface ForgotFormData {
   email: string;
@@ -22,32 +23,42 @@ interface ForgotFormData {
 const ForgotPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: ForgotFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const { addToast } = useToast();
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .email('Digite um e-mail válido')
-          .required('E-mail é obrigatório'),
-      });
+  const handleSubmit = useCallback(
+    async (data: ForgotFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .email('Digite um e-mail válido')
+            .required('E-mail é obrigatório'),
+        });
 
-      await api.post('/password/forgot', { email: data.email });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
-      } else {
-        formRef.current?.setErrors({
-          email: 'Por favor, verifique o e-mail digitado e tente novamente!',
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        await api.post('/password/forgot', { email: data.email });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro ao recuperar senha',
+          description:
+            'Por favor, verifique o e-mail digitado e tente novamente!',
         });
       }
-    }
-  }, []);
+    },
+    [addToast],
+  );
 
   return (
     <Container>
