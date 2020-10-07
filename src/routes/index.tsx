@@ -5,7 +5,7 @@ import Route from './Route';
 
 import Home from '../pages/Home';
 import MonitoringSchedule from '../pages/MonitoringSchedule';
-import Monitor from '../pages/Monitor';
+import BeAMonitor from '../pages/BeAMonitor';
 import LogIn from '../pages/LogIn';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
@@ -16,7 +16,7 @@ const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Home} />
     <Route path="/schedule" component={MonitoringSchedule} />
-    <Route path="/monitor" component={Monitor} />
+    <Route path="/monitor" component={BeAMonitor} />
     <Route path="/login" component={LogIn} />
     <Route path="/forgot_password" component={ForgotPassword} />
     <Route path="/reset_password" component={ResetPassword} />

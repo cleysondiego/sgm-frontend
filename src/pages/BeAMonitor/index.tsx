@@ -17,6 +17,7 @@ import Button from '../../components/Button';
 
 import { Container, Body, Content, AnimatedContainer } from './styles';
 import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 
 interface Monitoring {
   id: string;
@@ -33,19 +34,35 @@ interface Teacher {
   name: string;
 }
 
-const Monitor: React.FC = () => {
+const BeAMonitor: React.FC = () => {
   const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
   const [selectedMonitoring, setSelectedMonitoring] = useState<Monitoring>(
     {} as Monitoring,
   );
   const [teacher, setTeacher] = useState<Teacher>({} as Teacher);
 
+  const { addToast } = useToast();
+
   useEffect(() => {
-    api.get('monitoring').then(response => {
-      setMonitorings(response.data);
-      setTeacher(response.data[0].teacher);
-    });
-  }, [monitorings]);
+    const FetchData = async (): Promise<void> => {
+      try {
+        const response = await api.get('monitoring');
+
+        setMonitorings(response.data);
+        setTeacher(response.data[0].teacher);
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao ler as monitorias disponiveis',
+          description:
+            'Ocorreu um erro ao recuperar as monitorias disponiveis, por favor, tente novamente mais tarde!',
+        });
+      }
+    };
+
+    FetchData();
+    // eslint-disable-next-line
+  }, []);
 
   // const handleSubmit = useCallback(async data => {
   //   const response = await api.post('', data);
@@ -144,4 +161,4 @@ const Monitor: React.FC = () => {
   );
 };
 
-export default Monitor;
+export default BeAMonitor;

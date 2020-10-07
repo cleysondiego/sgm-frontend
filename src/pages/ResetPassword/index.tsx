@@ -1,5 +1,4 @@
 import React, { useCallback, useRef } from 'react';
-
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -11,9 +10,10 @@ import Footer from '../../components/Footer';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useToast } from '../../hooks/toast';
+import api from '../../services/api';
 
 import { Container, Content, AnimatedContainer } from './styles';
-import api from '../../services/api';
 
 interface ResetPasswordFormData {
   password: string;
@@ -25,6 +25,7 @@ const ResetPassword: React.FC = () => {
 
   const history = useHistory();
   const location = useLocation();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: ResetPasswordFormData) => {
@@ -62,10 +63,15 @@ const ResetPassword: React.FC = () => {
           formRef.current?.setErrors(errors);
         }
 
-        // Disparar Token de ERROR
+        addToast({
+          type: 'error',
+          title: 'Erro ao resetar a senha',
+          description:
+            'Ocorreu um erro ao resetar a senha, tente novamente mais tarde!',
+        });
       }
     },
-    [history, location],
+    [history, location, addToast],
   );
 
   return (
