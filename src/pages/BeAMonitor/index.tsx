@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import * as Yup from 'yup';
 import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 import {
   FiBookOpen,
   FiClock,
@@ -10,14 +12,26 @@ import {
   FiUser,
 } from 'react-icons/fi';
 
+import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Body, Content, AnimatedContainer } from './styles';
-import api from '../../services/api';
-import { useToast } from '../../hooks/toast';
+import {
+  Container,
+  Body,
+  Content,
+  AnimatedContainer,
+  Separator,
+} from './styles';
+import getValidationErrors from '../../utils/getValidationErrors';
+
+interface SendFormData {
+  email: string;
+  password: string;
+}
 
 interface Monitoring {
   id: string;
@@ -40,6 +54,8 @@ const BeAMonitor: React.FC = () => {
     {} as Monitoring,
   );
   const [teacher, setTeacher] = useState<Teacher>({} as Teacher);
+
+  const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
 
@@ -64,9 +80,41 @@ const BeAMonitor: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  // const handleSubmit = useCallback(async data => {
-  //   const response = await api.post('', data);
-  // }, []);
+  const handleSubmit = useCallback(async (data: SendFormData) => {
+    try {
+      formRef.current?.setErrors({});
+      const schema = Yup.object().shape({
+        name: Yup.string().required('É necessário o nome completo'),
+        zip_code: Yup.string().required('Cep é obrigatório'),
+        street: Yup.string().required('A rua é obrigatória'),
+        neighborhood: Yup.string().required('O bairro é obrigatório'),
+        city: Yup.string().required('A cidade é obrigatória'),
+        state: Yup.string().required('O estado é obrigatório'),
+        email: Yup.string().required('O E-mail é obrigatório'),
+        phone: Yup.string().required(
+          'É necessário algum telefone para contato',
+        ),
+        hours_available: Yup.string().required(
+          'É necessário selecionar quantas horas disponíveis você possui',
+        ),
+        agency: Yup.string().required('A agência é obrigatória'),
+        account: Yup.string().required('A conta é obrigatória'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      // CALL API
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+        formRef.current?.setErrors(errors);
+      }
+
+      // ADD TOAST
+    }
+  }, []);
 
   const handleSelect = useCallback(
     event => {
@@ -88,14 +136,10 @@ const BeAMonitor: React.FC = () => {
       <Body>
         <Content>
           <AnimatedContainer>
-            <Form
-              onSubmit={() => {
-                ('');
-              }}
-            >
+            <Form ref={formRef} onSubmit={handleSubmit}>
               <h1>Seja um Monitor</h1>
 
-              <div>
+              <Separator>
                 <div>
                   <select value={selectedMonitoring.id} onChange={handleSelect}>
                     {monitorings.map(monitoring => (
@@ -107,49 +151,57 @@ const BeAMonitor: React.FC = () => {
                 </div>
 
                 <Input
-                  name="professor"
+                  name="teacher"
                   icon={FiBookOpen}
                   placeholder={teacher.name}
                   disabled
                 />
-              </div>
+              </Separator>
 
-              <Input name="Nome" icon={FiUser} placeholder="Nome Completo" />
+              <Separator>
+                <Input name="name" icon={FiUser} placeholder="Nome Completo" />
+              </Separator>
 
-              <div>
-                <Input name="Cep" icon={FiMapPin} placeholder="Cep" />
-                <Input name="Rua" icon={FiMapPin} placeholder="Rua" />
-              </div>
+              <Separator>
+                <Input name="zip_code" icon={FiMapPin} placeholder="Cep" />
+                <Input name="street" icon={FiMapPin} placeholder="Rua" />
+              </Separator>
 
-              <div>
-                <Input name="Bairro" icon={FiMapPin} placeholder="Bairro" />
-                <Input name="Cidade" icon={FiMapPin} placeholder="Cidade" />
-                <Input name="Estado" icon={FiMapPin} placeholder="Estado" />
-              </div>
-
-              <div>
-                <Input name="Email" icon={FiMail} placeholder="Email" />
-                <Input name="Contato" icon={FiPhone} placeholder="Contato" />
-              </div>
-
-              <Input
-                name="Horas"
-                icon={FiClock}
-                placeholder="Quantidade de horas disponíveis"
-              />
-
-              <div>
+              <Separator>
                 <Input
-                  name="Agencia"
+                  name="neighborhood"
+                  icon={FiMapPin}
+                  placeholder="Bairro"
+                />
+                <Input name="city" icon={FiMapPin} placeholder="Cidade" />
+                <Input name="state" icon={FiMapPin} placeholder="Estado" />
+              </Separator>
+
+              <Separator>
+                <Input name="email" icon={FiMail} placeholder="Email" />
+                <Input name="phone" icon={FiPhone} placeholder="Contato" />
+              </Separator>
+
+              <Separator>
+                <Input
+                  name="hours_available"
+                  icon={FiClock}
+                  placeholder="Quantidade de horas disponíveis"
+                />
+              </Separator>
+
+              <Separator>
+                <Input
+                  name="agency"
                   icon={FiDollarSign}
                   placeholder="Agência"
                 />
                 <Input
-                  name="Conta"
+                  name="account"
                   icon={FiDollarSign}
                   placeholder="Conta-Corrente"
                 />
-              </div>
+              </Separator>
 
               <Button type="submit">Cadastrar-se</Button>
             </Form>

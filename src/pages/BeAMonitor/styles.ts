@@ -22,14 +22,14 @@ export const Content = styled.div`
 `;
 
 const appearFromLeft = keyframes`
-from{
-  opacity: 0;
-  transform: translateX(-50px);
-}
-to{
-  opacity: 1;
-  transform: translateX(0);
-}
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 `;
 
 export const AnimatedContainer = styled.div`
@@ -58,7 +58,7 @@ export const AnimatedContainer = styled.div`
     font-size: 30px;
   }
 
-  form div {
+  /* form div {
     display: flex;
     flex-direction: row;
 
@@ -72,7 +72,7 @@ export const AnimatedContainer = styled.div`
     div {
       margin-top: 0;
     }
-  }
+  } */
 
   form button {
     font-size: 20px;
@@ -91,5 +91,20 @@ export const AnimatedContainer = styled.div`
   @media screen and (max-width: 844px) {
     padding-top: 0;
     padding-bottom: 0;
+  }
+`;
+
+export const Separator = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  margin: 20px 15px 0 0;
+
+  &:last-child {
+    margin-right: 0px;
+  }
+
+  div {
+    margin-top: 0;
   }
 `;
