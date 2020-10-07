@@ -19,13 +19,7 @@ import Footer from '../../components/Footer';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import {
-  Container,
-  Body,
-  Content,
-  AnimatedContainer,
-  Separator,
-} from './styles';
+import { Container, Content, AnimatedContainer } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 interface SendFormData {
@@ -133,81 +127,71 @@ const BeAMonitor: React.FC = () => {
   return (
     <Container>
       <Header />
-      <Body>
-        <Content>
-          <AnimatedContainer>
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <h1>Seja um Monitor</h1>
 
-              <Separator>
-                <div>
-                  <select value={selectedMonitoring.id} onChange={handleSelect}>
-                    {monitorings.map(monitoring => (
-                      <option key={monitoring.id} value={monitoring.id}>
-                        {monitoring.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+      <Content>
+        <AnimatedContainer>
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Seja um Monitor</h1>
 
-                <Input
-                  name="teacher"
-                  icon={FiBookOpen}
-                  placeholder={teacher.name}
-                  disabled
-                />
-              </Separator>
+            <div>
+              <select value={selectedMonitoring.id} onChange={handleSelect}>
+                {monitorings.map(monitoring => (
+                  <option key={monitoring.id} value={monitoring.id}>
+                    {monitoring.name}
+                  </option>
+                ))}
+              </select>
 
-              <Separator>
-                <Input name="name" icon={FiUser} placeholder="Nome Completo" />
-              </Separator>
+              <Input
+                name="teacher"
+                icon={FiBookOpen}
+                placeholder={teacher.name}
+                disabled
+              />
+            </div>
 
-              <Separator>
-                <Input name="zip_code" icon={FiMapPin} placeholder="Cep" />
-                <Input name="street" icon={FiMapPin} placeholder="Rua" />
-              </Separator>
+            <div>
+              <Input name="name" icon={FiUser} placeholder="Nome Completo" />
+            </div>
 
-              <Separator>
-                <Input
-                  name="neighborhood"
-                  icon={FiMapPin}
-                  placeholder="Bairro"
-                />
-                <Input name="city" icon={FiMapPin} placeholder="Cidade" />
-                <Input name="state" icon={FiMapPin} placeholder="Estado" />
-              </Separator>
+            <div>
+              <Input name="zip_code" icon={FiMapPin} placeholder="Cep" />
+              <Input name="street" icon={FiMapPin} placeholder="Rua" />
+            </div>
 
-              <Separator>
-                <Input name="email" icon={FiMail} placeholder="Email" />
-                <Input name="phone" icon={FiPhone} placeholder="Contato" />
-              </Separator>
+            <div>
+              <Input name="neighborhood" icon={FiMapPin} placeholder="Bairro" />
+              <Input name="city" icon={FiMapPin} placeholder="Cidade" />
+              <Input name="state" icon={FiMapPin} placeholder="Estado" />
+            </div>
 
-              <Separator>
-                <Input
-                  name="hours_available"
-                  icon={FiClock}
-                  placeholder="Quantidade de horas disponíveis"
-                />
-              </Separator>
+            <div>
+              <Input name="email" icon={FiMail} placeholder="Email" />
+              <Input name="phone" icon={FiPhone} placeholder="Contato" />
+            </div>
 
-              <Separator>
-                <Input
-                  name="agency"
-                  icon={FiDollarSign}
-                  placeholder="Agência"
-                />
-                <Input
-                  name="account"
-                  icon={FiDollarSign}
-                  placeholder="Conta-Corrente"
-                />
-              </Separator>
+            <div>
+              <Input
+                name="hours_available"
+                icon={FiClock}
+                placeholder="Quantidade de horas disponíveis"
+              />
+            </div>
 
-              <Button type="submit">Cadastrar-se</Button>
-            </Form>
-          </AnimatedContainer>
-        </Content>
-      </Body>
+            <div>
+              <Input name="agency" icon={FiDollarSign} placeholder="Agência" />
+              <Input
+                name="account"
+                icon={FiDollarSign}
+                placeholder="Conta-Corrente"
+              />
+            </div>
+
+            <Button type="submit">Cadastrar-se</Button>
+          </Form>
+        </AnimatedContainer>
+      </Content>
+
       <Footer />
     </Container>
   );

@@ -5,20 +5,11 @@ export const Container = styled.div`
   min-height: 100vh;
 `;
 
-export const Body = styled.div`
-  padding-top: 80px;
-  padding-bottom: 263px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Content = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
+
+  padding-top: 80px;
+  padding-bottom: 263px;
 `;
 
 const appearFromLeft = keyframes`
@@ -35,76 +26,61 @@ const appearFromLeft = keyframes`
 export const AnimatedContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
+  align-items: center;
+  place-content: center;
+
+  width: 100%;
+
   animation: ${appearFromLeft} 1s;
 
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #283336;
-    color: #fff;
-    border-radius: 16px;
-    font-size: 40px;
-    height: 80px;
+  form {
+    margin: 16px 0;
+    flex-direction: column;
     text-align: center;
-    text-decoration: none;
-  }
 
-  form h1 {
-    margin-bottom: 35px;
-    font-size: 30px;
-  }
+    max-width: 749px;
 
-  /* form div {
-    display: flex;
-    flex-direction: row;
-
-    width: 100%;
-    margin: 20px 15px 0 0;
-
-    &:last-child {
-      margin-right: 0px;
+    h1 {
+      margin-bottom: 24px;
+      font-size: 30px;
     }
 
-    div {
+    & > div {
+      display: flex;
+      flex-direction: row;
+
+      margin-top: 20px;
+    }
+
+    & > div > div {
       margin-top: 0;
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0px;
+      }
     }
-  } */
 
-  form button {
-    font-size: 20px;
-  }
+    & > button {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
 
-  form select {
-    flex: 1;
-    font-size: 16px;
-    padding: 2px;
+    & > div > select {
+      flex: 1;
+      font-size: 16px;
+      padding: 2px;
 
-    color: #232129;
-    border: 2px solid #232129;
-    border-radius: 10px;
+      margin-right: 16px;
+
+      color: #232129;
+      border: 2px solid #232129;
+      border-radius: 10px;
+    }
   }
 
   @media screen and (max-width: 844px) {
     padding-top: 0;
     padding-bottom: 0;
-  }
-`;
-
-export const Separator = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  margin: 20px 15px 0 0;
-
-  &:last-child {
-    margin-right: 0px;
-  }
-
-  div {
-    margin-top: 0;
   }
 `;
