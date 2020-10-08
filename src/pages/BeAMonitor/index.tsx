@@ -23,8 +23,17 @@ import { Container, Content, AnimatedContainer } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 interface SendFormData {
+  name: string;
+  zip_code: string;
+  street: string;
+  neighborhood: string;
+  city: string;
+  state: string;
   email: string;
-  password: string;
+  phone: string;
+  hours_available: string;
+  agency: string;
+  account: string;
 }
 
 interface Monitoring {
@@ -74,41 +83,71 @@ const BeAMonitor: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  const handleSubmit = useCallback(async (data: SendFormData) => {
-    try {
-      formRef.current?.setErrors({});
-      const schema = Yup.object().shape({
-        name: Yup.string().required('É necessário o nome completo'),
-        zip_code: Yup.string().required('Cep é obrigatório'),
-        street: Yup.string().required('A rua é obrigatória'),
-        neighborhood: Yup.string().required('O bairro é obrigatório'),
-        city: Yup.string().required('A cidade é obrigatória'),
-        state: Yup.string().required('O estado é obrigatório'),
-        email: Yup.string().required('O E-mail é obrigatório'),
-        phone: Yup.string().required(
-          'É necessário algum telefone para contato',
-        ),
-        hours_available: Yup.string().required(
-          'É necessário selecionar quantas horas disponíveis você possui',
-        ),
-        agency: Yup.string().required('A agência é obrigatória'),
-        account: Yup.string().required('A conta é obrigatória'),
-      });
+  const handleSubmit = useCallback(
+    async (data: SendFormData) => {
+      try {
+        formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          name: Yup.string().required('É necessário o nome completo'),
+          zip_code: Yup.string().required('Cep é obrigatório'),
+          street: Yup.string().required('A rua é obrigatória'),
+          neighborhood: Yup.string().required('O bairro é obrigatório'),
+          city: Yup.string().required('A cidade é obrigatória'),
+          state: Yup.string().required('O estado é obrigatório'),
+          email: Yup.string().required('O E-mail é obrigatório'),
+          phone: Yup.string().required(
+            'É necessário algum telefone para contato',
+          ),
+          hours_available: Yup.string().required(
+            'É necessário selecionar quantas horas disponíveis você possui',
+          ),
+          agency: Yup.string().required('A agência é obrigatória'),
+          account: Yup.string().required('A conta é obrigatória'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      // CALL API
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
+        await api.post('/monitor', {
+          monitoring_id: selectedMonitoring.id,
+          name: data.name,
+          zip_code: data.zip_code,
+          street: data.street,
+          neighborhood: data.neighborhood,
+          city: data.city,
+          state: data.state,
+          email: data.email,
+          phone: data.phone,
+          hours_available: data.hours_available,
+          agency: data.agency,
+          account: data.account,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Você foi inscrito!',
+          description:
+            'Parabéns, a sua insrição foi realizada, aguarde a secretaria entrar em contato!',
+        });
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Ocorreu um erro!',
+          description:
+            'Aconteceu algum erro! Por favor, verifique os dados digitados e tente novamente!',
+        });
       }
-
-      // ADD TOAST
-    }
-  }, []);
+    },
+    [addToast, selectedMonitoring],
+  );
 
   const handleSelect = useCallback(
     event => {
