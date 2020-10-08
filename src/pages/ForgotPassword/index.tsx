@@ -41,6 +41,13 @@ const ForgotPassword: React.FC = () => {
         });
 
         await api.post('/password/forgot', { email: data.email });
+
+        addToast({
+          type: 'success',
+          title: 'Sucesso!',
+          description:
+            'Link para a recuperação de senha foi enviado para o seu e-mail!',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
