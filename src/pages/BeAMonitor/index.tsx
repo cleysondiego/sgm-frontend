@@ -82,6 +82,7 @@ const BeAMonitor: React.FC = () => {
 
         setMonitorings(response.data);
         setTeacher(response.data[0].teacher);
+        setSelectedMonitoring(response.data[0]);
       } catch (err) {
         addToast({
           type: 'error',
@@ -121,6 +122,8 @@ const BeAMonitor: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
+        console.log(selectedMonitoring);
 
         await api.post('/monitor', {
           monitoring_id: selectedMonitoring.id,
