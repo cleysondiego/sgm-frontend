@@ -11,6 +11,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   border-radius: 10px;
   padding: 16px;
+  padding-right: 0px;
   width: 100%;
 
   border: 2px solid #232129;
@@ -48,6 +49,10 @@ export const Container = styled.div<ContainerProps>`
     border: 0;
     color: #232129;
 
+    padding-right: 32px;
+
+    width: 100%;
+
     &::placeholder {
       color: #232129;
     }
@@ -60,10 +65,11 @@ export const Container = styled.div<ContainerProps>`
 
 export const Error = styled(Tooltip)`
   height: 20px;
-  margin-left: 16px;
 
   svg {
     margin: 0px;
+    position: absolute;
+    right: 5px;
   }
 
   span {
