@@ -14,9 +14,10 @@ import { Container, Error } from './styles';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   icon: React.ComponentType<IconBaseProps>;
+  onBlur?: (event: any) => Promise<void>;
 }
 
-const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
+const Input: React.FC<InputProps> = ({ name, icon: Icon, onBlur, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -28,10 +29,11 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
     setIsFocused(true);
   }, []);
 
-  const handleInputBlur = useCallback(() => {
+  const handleInputBlur = useCallback(event => {
     setIsFocused(false);
 
-    setIsFilled(!!inputRef.current?.value); // O operador !! transforma em boolean (Se o inputRef ter o value, então true, senão false).
+    setIsFilled(!!inputRef.current?.value);
+    onBlur && onBlur(event); // O operador !! transforma em boolean (Se o inputRef ter o value, então true, senão false).
   }, []);
 
   useEffect(() => {
