@@ -21,6 +21,7 @@ import Button from '../../components/Button';
 
 import { Container, Content, AnimatedContainer } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
+import viacep from '../../services/viacep';
 
 interface SendFormData {
   name: string;
@@ -51,12 +52,24 @@ interface Teacher {
   name: string;
 }
 
+interface ViacepResponse {
+  cep: string;
+  logradouro: string;
+  bairro: string;
+  localidade: string;
+  uf: string;
+}
+
 const BeAMonitor: React.FC = () => {
   const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
   const [selectedMonitoring, setSelectedMonitoring] = useState<Monitoring>(
     {} as Monitoring,
   );
   const [teacher, setTeacher] = useState<Teacher>({} as Teacher);
+  const [street, setStreet] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
 
   const formRef = useRef<FormHandles>(null);
 
@@ -163,6 +176,25 @@ const BeAMonitor: React.FC = () => {
     [monitorings],
   );
 
+  const handleBlurZipCode = useCallback(async event => {
+    if (!event.target.value) {
+      return;
+    }
+
+    try {
+      const response = await viacep.get<ViacepResponse>(
+        `${event.target.value}/json`,
+      );
+
+      setStreet(response.data.logradouro);
+      setNeighborhood(response.data.bairro);
+      setCity(response.data.localidade);
+      setState(response.data.uf);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <Container>
       <Header />
@@ -194,14 +226,44 @@ const BeAMonitor: React.FC = () => {
             </div>
 
             <div>
-              <Input name="zip_code" icon={FiMapPin} placeholder="Cep" />
-              <Input name="street" icon={FiMapPin} placeholder="Rua" />
+              <Input
+                onBlur={handleBlurZipCode}
+                name="zip_code"
+                icon={FiMapPin}
+                placeholder="Cep"
+              />
+
+              <Input
+                name="street"
+                icon={FiMapPin}
+                placeholder="Rua"
+                value={street}
+                onChange={event => setStreet(event.target.value)}
+              />
             </div>
 
             <div>
-              <Input name="neighborhood" icon={FiMapPin} placeholder="Bairro" />
-              <Input name="city" icon={FiMapPin} placeholder="Cidade" />
-              <Input name="state" icon={FiMapPin} placeholder="Estado" />
+              <Input
+                name="neighborhood"
+                icon={FiMapPin}
+                placeholder="Bairro"
+                value={neighborhood}
+                onChange={event => setNeighborhood(event.target.value)}
+              />
+              <Input
+                name="city"
+                icon={FiMapPin}
+                placeholder="Cidade"
+                value={city}
+                onChange={event => setCity(event.target.value)}
+              />
+              <Input
+                name="state"
+                icon={FiMapPin}
+                placeholder="Estado"
+                value={state}
+                onChange={event => setState(event.target.value)}
+              />
             </div>
 
             <div>
