@@ -34,6 +34,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, onBlur, ...rest }) => {
 
     setIsFilled(!!inputRef.current?.value);
     onBlur && onBlur(event); // O operador !! transforma em boolean (Se o inputRef ter o value, então true, senão false).
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
