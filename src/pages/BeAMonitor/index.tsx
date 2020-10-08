@@ -123,8 +123,6 @@ const BeAMonitor: React.FC = () => {
           abortEarly: false,
         });
 
-        console.log(selectedMonitoring);
-
         await api.post('/monitor', {
           monitoring_id: selectedMonitoring.id,
           name: data.name,
@@ -194,7 +192,7 @@ const BeAMonitor: React.FC = () => {
       setCity(response.data.localidade);
       setState(response.data.uf);
     } catch (err) {
-      console.log(err);
+      throw Error(err);
     }
   }, []);
 
