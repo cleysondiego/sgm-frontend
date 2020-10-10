@@ -1,28 +1,19 @@
-import React, { useCallback } from 'react';
-import LoggedHeader from '../../components/LoggedHeader';
-import { useAuth } from '../../hooks/auth';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { Container, Body, Content } from './styles';
+import LoggedHeader from '../../components/LoggedHeader';
+
+import { Container, Body } from './styles';
 
 const Dashboard: React.FC = () => {
-  const { signOut } = useAuth();
-
-  const handleLogOut = useCallback(() => {
-    signOut();
-  }, [signOut]);
-
   return (
     <Container>
-      <LoggedHeader>
-        <Body>
-          <Content>
-            <h1>Painel de Controle</h1>
-            <button type="button" onClick={handleLogOut}>
-              Sair
-            </button>
-          </Content>
-        </Body>
-      </LoggedHeader>
+      <LoggedHeader />
+      <Body>
+        <Link to="/monitoring">Monitorias</Link>
+        <Link to="/presences">Presenças</Link>
+        <Link to="/users">Users</Link>
+      </Body>
     </Container>
   );
 };
