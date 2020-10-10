@@ -4,8 +4,8 @@ import api from '../services/api';
 interface User {
   id: string;
   name: string;
-  avatar_url: string;
   email: string;
+  avatar_url: string;
   user_type: number;
 }
 
@@ -23,6 +23,7 @@ interface AuthContextData {
   user: User;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
+  updateUser(user: User): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -33,11 +34,20 @@ const AuthProvider: React.FC = ({ children }) => {
     const user = localStorage.getItem('@SGM:user');
 
     if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+
       return { token, user: JSON.parse(user) };
     }
 
     return {} as AuthState;
   });
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@SGM:token');
+    localStorage.removeItem('@SGM:user');
+
+    setData({} as AuthState);
+  }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('sessions', {
@@ -50,18 +60,27 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@SGM:token', token);
     localStorage.setItem('@SGM:user', JSON.stringify(user));
 
+    api.defaults.headers.authorization = `Bearer ${token}`;
+
     setData({ token, user });
   }, []);
 
-  const signOut = useCallback(() => {
-    localStorage.removeItem('@SGM:token');
-    localStorage.removeItem('@SGM:user');
+  const updateUser = useCallback(
+    (user: User) => {
+      localStorage.setItem('@SGM:user', JSON.stringify(user));
 
-    setData({} as AuthState);
-  }, []);
+      setData({
+        token: data.token,
+        user,
+      });
+    },
+    [setData, data.token],
+  );
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signOut, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
