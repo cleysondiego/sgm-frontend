@@ -5,45 +5,91 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { FiArrowLeft, FiCamera, FiLock, FiMail, FiUser } from 'react-icons/fi';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { useAuth } from '../../hooks/auth';
-
-import { Container, Content, AvatarInput } from './styles';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
 
+import { Container, Content, AvatarInput } from './styles';
+
 interface ProfileFormData {
+  name: string;
   email: string;
+  old_password: string;
   password: string;
+  password_confirmation: string;
 }
 
 const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn, user, updateUser } = useAuth();
+  const { user, updateUser } = useAuth();
   const { addToast } = useToast();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
       try {
         formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
           email: Yup.string()
-            .email('Digite um e-mail válido')
-            .required('E-Mail é obrigatório'),
-          password: Yup.string().required('Senha é obrigatória'),
+            .required('E-Mail obrigatório')
+            .email('Digite um e-mail válido'),
+          old_password: Yup.string(),
+          password: Yup.string().when('old_password', {
+            is: val => !!val.length,
+            then: Yup.string().required('Campo obrigatório'),
+            otherwise: Yup.string(),
+          }),
+          password_confirmation: Yup.string()
+            .when('old_password', {
+              is: val => !!val.length,
+              then: Yup.string().required('Campo obrigatório'),
+              otherwise: Yup.string(),
+            })
+            .oneOf([Yup.ref('password')], 'Confirmação incorreta'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await signIn({
-          email: data.email,
-          password: data.password,
+        const {
+          name,
+          email,
+          old_password,
+          password,
+          password_confirmation,
+        } = data;
+
+        const formData = {
+          name,
+          email,
+          ...(old_password
+            ? {
+                old_password,
+                password,
+                password_confirmation,
+              }
+            : {}),
+        };
+
+        const response = await api.put('/profile', formData);
+
+        history.push('/dashboard');
+
+        updateUser(response.data);
+
+        addToast({
+          type: 'success',
+          title: 'Perfil atualizado!',
+          description:
+            'Suas informações do perfil foram atualizadas com sucesso!',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -55,12 +101,12 @@ const Profile: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na autenticação',
-          description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
+          title: 'Erro na atualização',
+          description: 'Ocorreu um erro ao atualizar perfil, tente novamente.',
         });
       }
     },
-    [signIn, addToast],
+    [addToast, history, updateUser],
   );
 
   const handleAvatarChange = useCallback(
