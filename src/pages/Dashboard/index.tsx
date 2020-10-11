@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
     <Container>
       <LoggedHeader />
       <Body>
-        <Link to="/monitoring">Monitorias</Link>
+        <Link to="/monitorings">Monitorias</Link>
         <Link to="/presences">Presenças</Link>
         <Link to="/users">Users</Link>
       </Body>

@@ -3,9 +3,9 @@ import React, { ChangeEvent, useCallback, useRef } from 'react';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { FiArrowLeft, FiCamera, FiLock, FiMail, FiUser } from 'react-icons/fi';
+import { FiCamera, FiLock, FiMail, FiUser } from 'react-icons/fi';
 
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -14,6 +14,7 @@ import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
 
 import { Container, Content, AvatarInput } from './styles';
+import BackHeader from '../../components/BackHeader';
 
 interface ProfileFormData {
   name: string;
@@ -131,13 +132,7 @@ const Profile: React.FC = () => {
 
   return (
     <Container>
-      <header>
-        <div>
-          <Link to="/dashboard">
-            <FiArrowLeft />
-          </Link>
-        </div>
-      </header>
+      <BackHeader />
       <Content>
         <Form
           ref={formRef}
