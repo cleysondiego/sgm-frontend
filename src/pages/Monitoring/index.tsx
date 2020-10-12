@@ -40,15 +40,38 @@ const Monitoring: React.FC = () => {
   }, [addToast, history]);
 
   const handleClick = useCallback(
-    monitoring => {
+    (monitoring: Monitoring) => {
       history.push(`/show_monitoring?id=${monitoring.id}`);
     },
     [history],
   );
 
-  const handleDelete = useCallback((monitoring: Monitoring) => {
-    console.log(`HandleDelete = ${monitoring.name}`);
-  }, []);
+  const handleDelete = useCallback(
+    async (monitoring: Monitoring) => {
+      try {
+        await api.delete<Monitoring>(`monitoring/${monitoring.id}`);
+
+        const monitoringsArray = monitorings.filter(
+          item => item.id !== monitoring.id,
+        );
+
+        setMonitorings(monitoringsArray);
+
+        addToast({
+          type: 'success',
+          title: 'Monitoria deletada com sucesso!',
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar monitoria',
+          description:
+            'Ocorreu um erro ao deletar a monitoria, por favor, tente novamente!',
+        });
+      }
+    },
+    [addToast, monitorings],
+  );
 
   return (
     <Container>
