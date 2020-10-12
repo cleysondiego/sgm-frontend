@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FiEdit, FiTrash } from 'react-icons/fi';
+import { FiEdit, FiPlusCircle, FiTrash } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
 import BackHeader from '../../components/BackHeader';
 import { useToast } from '../../hooks/toast';
@@ -73,10 +73,17 @@ const Monitoring: React.FC = () => {
     [addToast, monitorings],
   );
 
+  const handleCreateMonitoring = useCallback(() => {
+    history.push('/create_monitoring');
+  }, [history]);
+
   return (
     <Container>
       <BackHeader title="Monitorias" />
       <Content>
+        <button type="button" onClick={handleCreateMonitoring}>
+          <FiPlusCircle />
+        </button>
         <table>
           <tbody>
             <tr>

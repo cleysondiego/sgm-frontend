@@ -10,6 +10,10 @@ export const Content = styled.div`
 
   width: 100%;
 
+  > button:first-child {
+    margin-top: 32px;
+  }
+
   table {
     margin-top: 32px;
     max-width: 1120px;

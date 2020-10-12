@@ -12,8 +12,10 @@ import ResetPassword from '../pages/ResetPassword';
 
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
+
 import Monitoring from '../pages/Monitoring';
 import ShowMonitoring from '../pages/ShowMonitoring';
+import CreateMonitoring from '../pages/CreateMonitoring';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -26,8 +28,10 @@ const Routes: React.FC = () => (
 
     <Route path="/dashboard" component={Dashboard} isPrivate />
     <Route path="/profile" component={Profile} isPrivate />
+
     <Route path="/monitorings" component={Monitoring} isPrivate />
     <Route path="/show_monitoring" component={ShowMonitoring} isPrivate />
+    <Route path="/create_monitoring" component={CreateMonitoring} isPrivate />
   </Switch>
 );
 
