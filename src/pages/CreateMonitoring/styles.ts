@@ -13,8 +13,6 @@ export const Content = styled.div`
   form {
     margin: 16px 0;
     width: 440px;
-    display: flex;
-    flex-direction: column;
 
     > div {
       display: flex;
@@ -38,23 +36,6 @@ export const Content = styled.div`
         color: #232129;
         border: 2px solid #232129;
         border-radius: 10px;
-      }
-    }
-
-    > div:first-child {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 16px;
-      justify-content: space-between;
-    }
-
-    button {
-      border: 0;
-      background: none;
-
-      svg {
-        width: 32px;
-        height: 32px;
       }
     }
   }

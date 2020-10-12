@@ -1,33 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import * as Yup from 'yup';
-import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { FiEdit, FiHome, FiInfo, FiSave } from 'react-icons/fi';
+import { FormHandles } from '@unform/core';
+import { FiHome, FiInfo } from 'react-icons/fi';
+import * as Yup from 'yup';
 
+import { useHistory } from 'react-router-dom';
+import api from '../../services/api';
 import BackHeader from '../../components/BackHeader';
 import Input from '../../components/Input';
-
-import getValidationErrors from '../../utils/getValidationErrors';
-import api from '../../services/api';
+import Button from '../../components/Button';
 import { useToast } from '../../hooks/toast';
 
 import { Container, Content } from './styles';
-
-interface Monitoring {
-  id: string;
-  monitor_id: string;
-  teacher_id: string;
-  name: string;
-  isAvailable: boolean;
-  room: string;
-  schedule: string;
-  day: string;
-}
-
-interface IsAvailable {
-  value: 'true' | 'false';
-}
+import getValidationErrors from '../../utils/getValidationErrors';
 
 interface User {
   id: string;
@@ -35,71 +20,52 @@ interface User {
   avatar_url: string;
 }
 
-const ShowMonitoring: React.FC = () => {
+interface IsAvailable {
+  value: 'true' | 'false';
+}
+
+interface CreateMonitoringFormData {
+  name: string;
+  teacher_id: string;
+  monitor_id: string;
+  isAvailable: boolean;
+  room: string;
+  schedule: string;
+  day: string;
+}
+
+const CreateMonitoring: React.FC = () => {
   const [teachers, setTeachers] = useState<User[]>([]);
   const [monitors, setMonitors] = useState<User[]>([]);
-
-  const [selectedTeacher, setSelectedTeacher] = useState<User>({} as User);
-  const [selectedMonitor, setSelectedMonitor] = useState<User>({} as User);
   const [isAvailable, setIsAvailable] = useState<IsAvailable>({
     value: 'true',
   });
+  const [hour, setHour] = useState('06:00');
+  const [date, setDate] = useState('alldays');
 
-  const [hour, setHour] = useState('');
-  const [date, setDate] = useState('');
-
-  const [monitoring, setMonitoring] = useState<Monitoring>({} as Monitoring);
-  const [inputDisabled, setInputDisabled] = useState(true);
+  const [selectedTeacher, setSelectedTeacher] = useState<User>({} as User);
+  const [selectedMonitor, setSelectedMonitor] = useState<User>({} as User);
 
   const formRef = useRef<FormHandles>(null);
-
-  const location = useLocation();
   const history = useHistory();
   const { addToast } = useToast();
-
-  const monitoring_id = location.search.replace('?id=', '');
 
   useEffect(() => {
     const FetchData = async (): Promise<void> => {
       try {
-        const response = await api.get<Monitoring>(
-          `monitoring/${monitoring_id}`,
-        );
-
-        setMonitoring(response.data);
-        setHour(response.data.schedule);
-        setDate(response.data.day);
-
         const responseTeachers = await api.get<User[]>('users/2');
         const responseMonitors = await api.get<User[]>('users/1');
 
         setTeachers(responseTeachers.data);
         setMonitors(responseMonitors.data);
 
-        const teacherSelected = responseTeachers.data.find(
-          teacher => teacher.id === response.data.teacher_id,
-        );
-
-        if (teacherSelected) {
-          setSelectedTeacher(teacherSelected);
-        }
-
-        const monitorSelected = responseMonitors.data.find(
-          monitor => monitor.id === response.data.monitor_id,
-        );
-
-        if (monitorSelected) {
-          setSelectedMonitor(monitorSelected);
-        }
+        // setSelectedMonitor(responseMonitors.data[0]);
+        // setSelectedTeacher(responseTeachers.data[0]);
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro ao ler monitoria',
-          description:
-            'Ocorreu um erro ao recuperar as informações sobre essa monitoria, por favor, tente novamente!',
+          title: 'Erro ao ler os professores e monitores disponiveis',
         });
-
-        history.push('/monitorings');
       }
     };
 
@@ -108,10 +74,9 @@ const ShowMonitoring: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (data: Monitoring) => {
+    async (data: CreateMonitoringFormData) => {
       try {
         formRef.current?.setErrors({});
-
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome é obrigatório'),
           room: Yup.string(),
@@ -123,14 +88,11 @@ const ShowMonitoring: React.FC = () => {
 
         const { name, room } = data;
 
-        const id = monitoring_id;
-
         const teacher_id = selectedTeacher.id || undefined;
         const monitor_id = selectedMonitor.id || undefined;
         const isAvailableData = isAvailable.value === 'true';
 
-        await api.patch('/monitoring', {
-          id,
+        await api.post('monitoring', {
           name,
           room,
           teacher_id,
@@ -144,8 +106,8 @@ const ShowMonitoring: React.FC = () => {
 
         addToast({
           type: 'success',
-          title: 'Monitoria atualizada!',
-          description: 'A monitoria foi atualizada com sucesso!',
+          title: 'Monitoria criada!',
+          description: 'A nova monitoria foi criada com sucesso!',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -157,41 +119,22 @@ const ShowMonitoring: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro ao atualizar monitoria',
+          title: 'Erro ao criar nova monitoria',
           description:
-            'Ocorreu um erro ao atualizar essa monitoria, tente novamente!',
+            'Ocorreu um erro ao riar nova monitoria, cheque o nome da monitoria e tente novamente!',
         });
       }
     },
     [
       addToast,
-      history,
       date,
       hour,
       isAvailable.value,
       selectedMonitor.id,
-      monitoring_id,
       selectedTeacher.id,
+      history,
     ],
   );
-
-  const handleEdit = useCallback(() => {
-    setInputDisabled(!inputDisabled);
-
-    if (inputDisabled) {
-      addToast({
-        type: 'info',
-        title: 'Edição habilitada!',
-      });
-
-      return;
-    }
-
-    addToast({
-      type: 'info',
-      title: 'Edição desabilitada!',
-    });
-  }, [addToast, inputDisabled]);
 
   const handleSelectTeacher = useCallback(
     event => {
@@ -244,74 +187,49 @@ const ShowMonitoring: React.FC = () => {
 
   return (
     <Container>
-      <BackHeader to="/monitorings" title={monitoring.name} />
+      <BackHeader title="Criar nova monitoria" to="/monitorings" />
       <Content>
-        <Form
-          ref={formRef}
-          initialData={{
-            name: monitoring.name,
-            room: monitoring.room,
-          }}
-          onSubmit={handleSubmit}
-        >
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <div>
-            <button type="button" onClick={handleEdit}>
-              <FiEdit />
-            </button>
-
-            <button type="submit" disabled={inputDisabled}>
-              <FiSave />
-            </button>
+            <span>Digite o nome da monitoria:</span>
+            <Input name="name" icon={FiInfo} placeholder="Nome da monitoria" />
           </div>
 
           <div>
-            <span>Nome da monitoria:</span>
-            <Input
-              name="name"
-              icon={FiInfo}
-              placeholder="Nome da monitoria"
-              disabled={inputDisabled}
-            />
-          </div>
-
-          <div>
-            <span>Professor responsável:</span>
+            <span>Selecione o professor responsável:</span>
             <select
               value={selectedTeacher.id || 'unknow'}
               onChange={handleSelectTeacher}
-              disabled={inputDisabled}
             >
               {teachers.map(teacher => (
                 <option key={teacher.id} value={teacher.id}>
                   {teacher.name}
                 </option>
               ))}
-              <option value="unknow">Nenhum professor associado</option>
+              <option value="unknow">Não associar</option>
             </select>
           </div>
 
           <div>
-            <span>Monitor responsável:</span>
+            <span>Selecione o monitor responsável:</span>
             <select
               value={selectedMonitor.id || 'unknow'}
               onChange={handleSelectMonitor}
-              disabled={inputDisabled}
             >
               {monitors.map(monitor => (
                 <option key={monitor.id} value={monitor.id}>
                   {monitor.name}
                 </option>
               ))}
-              <option value="unknow">Nenhum monitor associado</option>
+              <option value="unknow">Não associar</option>
             </select>
           </div>
 
           <div>
-            <span>Disponibilidade:</span>
+            <span>Já está disponivel?</span>
             <select
               value={isAvailable.value}
               onChange={handleChangeIsAvailable}
-              disabled={inputDisabled}
             >
               <option value="true">Sim</option>
               <option value="false">Não</option>
@@ -319,22 +237,13 @@ const ShowMonitoring: React.FC = () => {
           </div>
 
           <div>
-            <span>Sala:</span>
-            <Input
-              name="room"
-              icon={FiHome}
-              placeholder="Sala"
-              disabled={inputDisabled}
-            />
+            <span>Digite o nome da sala:</span>
+            <Input name="room" icon={FiHome} placeholder="Sala" />
           </div>
 
           <div>
-            <span>Horário:</span>
-            <select
-              value={hour}
-              onChange={handleSelectHour}
-              disabled={inputDisabled}
-            >
+            <span>Selecione o horário:</span>
+            <select value={hour} onChange={handleSelectHour}>
               <option value="06:00">06:00</option>
               <option value="07:00">07:00</option>
               <option value="08:00">08:00</option>
@@ -353,12 +262,8 @@ const ShowMonitoring: React.FC = () => {
           </div>
 
           <div>
-            <span>Dias que está disponível:</span>
-            <select
-              value={date}
-              onChange={handleSelectDay}
-              disabled={inputDisabled}
-            >
+            <span>Selecione os dias que estará disponivel:</span>
+            <select value={date} onChange={handleSelectDay}>
               <option value="monday">Segunda-Feira</option>
               <option value="tuesday">Terça-Feira</option>
               <option value="wednesday">Quarta-Feira</option>
@@ -368,10 +273,12 @@ const ShowMonitoring: React.FC = () => {
               <option value="alldays">De seg à sab</option>
             </select>
           </div>
+
+          <Button type="submit">Criar nova monitoria</Button>
         </Form>
       </Content>
     </Container>
   );
 };
 
-export default ShowMonitoring;
+export default CreateMonitoring;

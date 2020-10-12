@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { FiEdit, FiPlusCircle, FiTrash } from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
 import BackHeader from '../../components/BackHeader';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
@@ -39,25 +40,79 @@ const Monitoring: React.FC = () => {
   }, [addToast, history]);
 
   const handleClick = useCallback(
-    monitoring => {
+    (monitoring: Monitoring) => {
       history.push(`/show_monitoring?id=${monitoring.id}`);
     },
     [history],
   );
 
+  const handleDelete = useCallback(
+    async (monitoring: Monitoring) => {
+      try {
+        await api.delete<Monitoring>(`monitoring/${monitoring.id}`);
+
+        const monitoringsArray = monitorings.filter(
+          item => item.id !== monitoring.id,
+        );
+
+        setMonitorings(monitoringsArray);
+
+        addToast({
+          type: 'success',
+          title: 'Monitoria deletada com sucesso!',
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar monitoria',
+          description:
+            'Ocorreu um erro ao deletar a monitoria, por favor, tente novamente!',
+        });
+      }
+    },
+    [addToast, monitorings],
+  );
+
+  const handleCreateMonitoring = useCallback(() => {
+    history.push('/create_monitoring');
+  }, [history]);
+
   return (
     <Container>
       <BackHeader title="Monitorias" />
       <Content>
-        {monitorings.map(monitoring => (
-          <button
-            type="button"
-            key={monitoring.id}
-            onClick={() => handleClick(monitoring)}
-          >
-            {monitoring.name}
-          </button>
-        ))}
+        <button type="button" onClick={handleCreateMonitoring}>
+          <FiPlusCircle />
+        </button>
+        <table>
+          <tbody>
+            <tr>
+              <th>Nome da monitoria</th>
+              <th>Ações</th>
+            </tr>
+            {monitorings.map(monitoring => (
+              <tr key={monitoring.id}>
+                <td>
+                  <Link to={`/show_monitoring?id=${monitoring.id}`}>
+                    {monitoring.name}
+                  </Link>
+                </td>
+                <td>
+                  <button type="button" onClick={() => handleClick(monitoring)}>
+                    <FiEdit />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(monitoring)}
+                  >
+                    <FiTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </Content>
     </Container>
   );
