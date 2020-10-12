@@ -1,20 +1,36 @@
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  height: 144px;
-  background: #28252e;
-
   display: flex;
+  height: 144px;
+  width: 100%;
+  background: #28252e;
   align-items: center;
+  justify-content: center;
 
-  > div {
+  div {
+    flex: 1;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 
-    width: 100%;
     max-width: 1120px;
-    margin: 0 auto;
+
+    div {
+      align-items: center;
+      justify-content: center;
+    }
+
+    div:first-child {
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    div:last-child {
+      align-items: center;
+      justify-content: flex-end;
+    }
 
     svg {
       color: #fff;
@@ -24,6 +40,12 @@ export const Header = styled.header`
 
     h1 {
       color: #fff;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
     }
   }
 `;
