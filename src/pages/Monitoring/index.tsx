@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
 import BackHeader from '../../components/BackHeader';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
@@ -45,19 +46,43 @@ const Monitoring: React.FC = () => {
     [history],
   );
 
+  const handleDelete = useCallback((monitoring: Monitoring) => {
+    console.log(`HandleDelete = ${monitoring.name}`);
+  }, []);
+
   return (
     <Container>
       <BackHeader title="Monitorias" />
       <Content>
-        {monitorings.map(monitoring => (
-          <button
-            type="button"
-            key={monitoring.id}
-            onClick={() => handleClick(monitoring)}
-          >
-            {monitoring.name}
-          </button>
-        ))}
+        <table>
+          <tbody>
+            <tr>
+              <th>Nome da monitoria</th>
+              <th>Ações</th>
+            </tr>
+            {monitorings.map(monitoring => (
+              <tr key={monitoring.id}>
+                <td>
+                  <Link to={`/show_monitoring?id=${monitoring.id}`}>
+                    {monitoring.name}
+                  </Link>
+                </td>
+                <td>
+                  <button type="button" onClick={() => handleClick(monitoring)}>
+                    <FiEdit />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(monitoring)}
+                  >
+                    <FiTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </Content>
     </Container>
   );
