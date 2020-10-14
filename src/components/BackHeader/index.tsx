@@ -8,9 +8,14 @@ import { Header } from './styles';
 interface BackHeaderProps {
   to?: string;
   title?: string;
+  show_profile?: boolean;
 }
 
-const BackHeader: React.FC<BackHeaderProps> = ({ to, title = '' }) => {
+const BackHeader: React.FC<BackHeaderProps> = ({
+  to,
+  title = '',
+  show_profile = true,
+}) => {
   const { user } = useAuth();
 
   return (
@@ -25,9 +30,11 @@ const BackHeader: React.FC<BackHeaderProps> = ({ to, title = '' }) => {
           <h1>{title}</h1>
         </div>
         <div>
-          <Link to="/profile">
-            <img src={user.avatar_url} alt={user.name} />
-          </Link>
+          {show_profile && (
+            <Link to="/profile">
+              <img src={user.avatar_url} alt={user.name} />
+            </Link>
+          )}
         </div>
       </div>
     </Header>

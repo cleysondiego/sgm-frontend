@@ -33,7 +33,7 @@ export const Content = styled.div`
 
       td {
         a {
-          color: #c53030;
+          color: #d62d2d;
           text-decoration: none;
 
           &:hover {
