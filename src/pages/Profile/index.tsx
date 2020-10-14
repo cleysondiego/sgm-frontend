@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
 
   return (
     <Container>
-      <BackHeader />
+      <BackHeader show_profile={false} />
       <Content>
         <Form
           ref={formRef}

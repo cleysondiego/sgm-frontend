@@ -21,7 +21,7 @@ export const HeaderContent = styled.div`
     border: 0;
 
     svg {
-      color: #999591;
+      color: #fff;
       width: 32px;
       height: 32px;
     }
@@ -47,11 +47,11 @@ export const Profile = styled.div`
     font-size: 32px;
 
     span {
-      color: #f4ede8;
+      color: #fff;
     }
 
     a {
-      color: #c53030;
+      color: #d62d2d;
       text-decoration: none;
 
       &:hover {
