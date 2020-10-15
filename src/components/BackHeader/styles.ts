@@ -17,6 +17,14 @@ export const Header = styled.header`
 
     max-width: 1120px;
 
+    a {
+      transition: opacity 0.2s;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+
     div {
       align-items: center;
       justify-content: center;

@@ -4,7 +4,7 @@ export const Container = styled.div``;
 
 export const Header = styled.header`
   padding: 32px 0;
-  background: #283336;
+  background: #28252e;
 `;
 
 export const HeaderContent = styled.div`

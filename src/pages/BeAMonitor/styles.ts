@@ -9,7 +9,6 @@ export const Content = styled.div`
   display: flex;
 
   padding-top: 80px;
-  padding-bottom: 263px;
 `;
 
 const appearFromLeft = keyframes`
@@ -43,6 +42,7 @@ export const AnimatedContainer = styled.div`
     h1 {
       margin-bottom: 24px;
       font-size: 30px;
+      color: #900;
     }
 
     & > div {

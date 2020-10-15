@@ -58,9 +58,6 @@ const CreateMonitoring: React.FC = () => {
 
         setTeachers(responseTeachers.data);
         setMonitors(responseMonitors.data);
-
-        // setSelectedMonitor(responseMonitors.data[0]);
-        // setSelectedTeacher(responseTeachers.data[0]);
       } catch (err) {
         addToast({
           type: 'error',
