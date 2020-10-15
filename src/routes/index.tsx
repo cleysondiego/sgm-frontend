@@ -16,6 +16,7 @@ import Profile from '../pages/Profile';
 import Monitoring from '../pages/Monitoring';
 import ShowMonitoring from '../pages/ShowMonitoring';
 import CreateMonitoring from '../pages/CreateMonitoring';
+import Users from '../pages/Users';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -32,6 +33,8 @@ const Routes: React.FC = () => (
     <Route path="/monitorings" component={Monitoring} isPrivate />
     <Route path="/show_monitoring" component={ShowMonitoring} isPrivate />
     <Route path="/create_monitoring" component={CreateMonitoring} isPrivate />
+
+    <Route path="/users" component={Users} isPrivate />
   </Switch>
 );
 

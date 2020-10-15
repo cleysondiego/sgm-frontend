@@ -31,8 +31,6 @@ export const Content = styled.div`
     width: 100%;
 
     tbody {
-      align-items: center;
-      justify-content: center;
       font-size: 24px;
 
       td,
