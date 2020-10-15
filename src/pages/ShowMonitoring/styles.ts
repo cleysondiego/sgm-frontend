@@ -55,6 +55,7 @@ export const Content = styled.div`
       svg {
         width: 32px;
         height: 32px;
+        color: #d62d2d;
       }
     }
   }

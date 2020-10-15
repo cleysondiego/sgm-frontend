@@ -27,14 +27,14 @@ export const Content = styled.div`
 `;
 
 const appearFromLeft = keyframes`
-from{
+  from {
   opacity: 0;
   transform: translateX(-50px);
-}
-to{
+  }
+  to {
   opacity: 1;
   transform: translateX(0);
-}
+  }
 `;
 
 export const AnimatedContainer = styled.div`
@@ -52,12 +52,13 @@ export const AnimatedContainer = styled.div`
   }
 
   h1 {
-    font-size: 60px;
+    font-size: 36px;
+    color: #900;
   }
 
   p {
     max-width: 500px;
-    font-size: 30px;
+    font-size: 26px;
     text-align: justify;
   }
 
@@ -68,7 +69,7 @@ export const AnimatedContainer = styled.div`
     background-color: #283336;
     color: #fff;
     border-radius: 16px;
-    font-size: 40px;
+    font-size: 26px;
     height: 80px;
     text-align: center;
     text-decoration: none;

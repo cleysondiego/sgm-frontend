@@ -10,6 +10,10 @@ export const Content = styled.div`
 
   width: 100%;
 
+  svg {
+    color: #d62d2d;
+  }
+
   > button:first-child {
     margin-top: 32px;
   }
@@ -33,7 +37,7 @@ export const Content = styled.div`
 
       td {
         a {
-          color: #d62d2d;
+          color: #000;
           text-decoration: none;
 
           &:hover {
