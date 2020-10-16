@@ -17,6 +17,10 @@ import Monitoring from '../pages/Monitoring';
 import ShowMonitoring from '../pages/ShowMonitoring';
 import CreateMonitoring from '../pages/CreateMonitoring';
 
+import Users from '../pages/Users';
+import CreateUser from '../pages/CreateUser';
+import ShowUser from '../pages/ShowUser';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Home} />
@@ -32,6 +36,10 @@ const Routes: React.FC = () => (
     <Route path="/monitorings" component={Monitoring} isPrivate />
     <Route path="/show_monitoring" component={ShowMonitoring} isPrivate />
     <Route path="/create_monitoring" component={CreateMonitoring} isPrivate />
+
+    <Route path="/users" component={Users} isPrivate />
+    <Route path="/create_user" component={CreateUser} isPrivate />
+    <Route path="/show_user" component={ShowUser} isPrivate />
   </Switch>
 );
 
