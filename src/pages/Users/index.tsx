@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { FiEdit, FiPlusCircle, FiTrash } from 'react-icons/fi';
 import { useToast } from '../../hooks/toast';
@@ -19,6 +19,8 @@ const Users: React.FC = () => {
 
   const history = useHistory();
   const { addToast } = useToast();
+
+  const userType = ['Monitor', 'Professor', 'Coordenador', 'Secretaria'];
 
   useEffect(() => {
     const FetchData = async (): Promise<void> => {
@@ -42,8 +44,40 @@ const Users: React.FC = () => {
   }, [addToast, history]);
 
   const handleCreateUser = useCallback(() => {
-    console.log('Handle Create User');
-  }, []);
+    history.push('/create_user');
+  }, [history]);
+
+  const handleClick = useCallback(
+    (user: User) => {
+      history.push(`/show_user?id=${user.id}`);
+    },
+    [history],
+  );
+
+  const handleDelete = useCallback(
+    async (user: User) => {
+      try {
+        await api.delete<User>(`users/${user.id}`);
+
+        const usersArray = users.filter(item => item.id !== user.id);
+
+        setUsers(usersArray);
+
+        addToast({
+          type: 'success',
+          title: 'Usuário deletado com sucesso!',
+        });
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao deletar usuário',
+          description:
+            'Ocorreu um erro ao deletar o usuário, por favor, tente novamente!',
+        });
+      }
+    },
+    [addToast, users],
+  );
 
   return (
     <Container>
@@ -61,14 +95,16 @@ const Users: React.FC = () => {
             </tr>
             {users.map(user => (
               <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.user_type}</td>
                 <td>
-                  <button type="button">
+                  <Link to={`/show_user?id=${user.id}`}>{user.name}</Link>
+                </td>
+                <td>{userType[user.user_type - 1]}</td>
+                <td>
+                  <button type="button" onClick={() => handleClick(user)}>
                     <FiEdit />
                   </button>
 
-                  <button type="button">
+                  <button type="button" onClick={() => handleDelete(user)}>
                     <FiTrash />
                   </button>
                 </td>
