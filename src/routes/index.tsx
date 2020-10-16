@@ -21,6 +21,8 @@ import Users from '../pages/Users';
 import CreateUser from '../pages/CreateUser';
 import ShowUser from '../pages/ShowUser';
 
+import Presences from '../pages/Presences';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Home} />
@@ -40,6 +42,8 @@ const Routes: React.FC = () => (
     <Route path="/users" component={Users} isPrivate />
     <Route path="/create_user" component={CreateUser} isPrivate />
     <Route path="/show_user" component={ShowUser} isPrivate />
+
+    <Route path="/presences" component={Presences} isPrivate />
   </Switch>
 );
 
