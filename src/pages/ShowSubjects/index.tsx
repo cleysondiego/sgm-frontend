@@ -72,7 +72,7 @@ const ShowSubjects: React.FC = () => {
   );
 
   const handleCreateSubject = useCallback(() => {
-    history.push(`/create_subjects/${monitoring_id}`);
+    history.push(`/create_subjects?id=${monitoring_id}`);
   }, [history, monitoring_id]);
 
   return (
@@ -118,11 +118,7 @@ const ShowSubjects: React.FC = () => {
                   ) : undefined}
                 </td>
                 <td>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(subject)}
-                    disabled
-                  >
+                  <button type="button" onClick={() => handleDelete(subject)}>
                     <FiTrash />
                   </button>
                 </td>

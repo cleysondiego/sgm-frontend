@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useRef } from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { FiFile, FiLink } from 'react-icons/fi';
@@ -14,11 +14,15 @@ import { Container, Content } from './styles';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 
-interface FormFileData {
+interface FormLinkData {
   title: string;
+  url: string;
 }
 
 const CreateSubject: React.FC = () => {
+  const [fileTitle, setFileTitle] = useState('');
+  const [file, setFile] = useState({} as File);
+
   const formLinkRef = useRef<FormHandles>(null);
   const formFileRef = useRef<FormHandles>(null);
 
@@ -28,61 +32,101 @@ const CreateSubject: React.FC = () => {
 
   const monitoring_id = location.search.replace('?id=', '');
 
-  const handleSubmitLink = useCallback(() => {
-    console.log('Handle Submit Link');
-  }, []);
-
-  const handleSubmitFile = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSubmitLink = useCallback(
+    async (data: FormLinkData) => {
       try {
-        formFileRef.current?.setErrors({});
+        formLinkRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          title: Yup.string().required('Descrição é obrigatória'),
+          title: Yup.string().required('Título é obrigatório'),
+          url: Yup.string().required('Url é obrigatório'),
         });
 
-        await schema.validate(formFileRef.current?.getData(), {
+        await schema.validate(data, {
           abortEarly: false,
         });
 
-        let daadsda = {} as FormFileData;
+        const { title, url } = data;
 
-        daadsda = formFileRef.current?.getData();
+        await api.post('subject', {
+          title,
+          monitoring_id,
+          url,
+        });
 
-        console.log(title.title);
+        history.goBack();
 
-        if (e.target?.files) {
-          const data = new FormData();
-
-          data.append('subjects', e.target.files[0]);
-
-          await api.patch(`/subject/${monitoring_id}/`);
-
-          history.goBack();
-
-          addToast({
-            type: 'success',
-            title: 'Material adicionado com sucesso!',
-          });
-        }
+        addToast({
+          type: 'success',
+          title: 'Material adicionado com sucesso!',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
-          formFileRef.current?.setErrors(errors);
+          formLinkRef.current?.setErrors(errors);
 
           return;
         }
 
         addToast({
           type: 'error',
-          title: 'Erro na atualização',
+          title: 'Erro ao criar novo material',
           description:
-            'Ocorreu um erro ao criar novo usuário, por favor, tente novamente!',
+            'Ocorreu um erro ao criar novo material, por favor, tente novamente!',
         });
       }
     },
     [addToast, history, monitoring_id],
   );
+
+  const handleSubmitFile = useCallback(async () => {
+    try {
+      formFileRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        title: Yup.string().required('Descrição é obrigatória'),
+      });
+
+      await schema.validate(formFileRef.current?.getData(), {
+        abortEarly: false,
+      });
+
+      if (file) {
+        const data = new FormData();
+
+        data.append('subjects', file);
+
+        await api.patch(`/subject/${monitoring_id}/${fileTitle}`, data);
+
+        history.goBack();
+
+        addToast({
+          type: 'success',
+          title: 'Material adicionado com sucesso!',
+        });
+      }
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+        formFileRef.current?.setErrors(errors);
+
+        return;
+      }
+
+      addToast({
+        type: 'error',
+        title: 'Erro ao criar novo material',
+        description:
+          'Ocorreu um erro ao criar novo material, por favor, tente novamente!',
+      });
+    }
+  }, [addToast, history, monitoring_id, fileTitle, file]);
+
+  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  }, []);
 
   return (
     <Container>
@@ -98,7 +142,7 @@ const CreateSubject: React.FC = () => {
               placeholder="Descrição do Material"
             />
 
-            <Input name="link" icon={FiLink} placeholder="Link" />
+            <Input name="url" icon={FiLink} placeholder="Link" />
 
             <Button type="submit">Salvar Link</Button>
           </Form>
@@ -111,9 +155,10 @@ const CreateSubject: React.FC = () => {
               name="title"
               icon={FiFile}
               placeholder="Descrição do Material"
+              onChange={event => setFileTitle(event.target.value)}
             />
 
-            <input type="file" id="avatar" />
+            <input type="file" id="avatar" onChange={handleFileChange} />
 
             <Button type="submit">Salvar Arquivo</Button>
           </Form>
