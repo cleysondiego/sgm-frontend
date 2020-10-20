@@ -23,6 +23,10 @@ import ShowUser from '../pages/ShowUser';
 
 import Presences from '../pages/Presences';
 
+import Subjects from '../pages/Subjects';
+import ShowSubjects from '../pages/ShowSubjects';
+import CreateSubject from '../pages/CreateSubject';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Home} />
@@ -44,6 +48,10 @@ const Routes: React.FC = () => (
     <Route path="/show_user" component={ShowUser} isPrivate />
 
     <Route path="/presences" component={Presences} isPrivate />
+
+    <Route path="/subjects" component={Subjects} isPrivate />
+    <Route path="/create_subjects" component={CreateSubject} isPrivate />
+    <Route path="/show_subjects" component={ShowSubjects} isPrivate />
   </Switch>
 );
 

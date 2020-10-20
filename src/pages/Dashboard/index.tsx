@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiLayers, FiMonitor, FiUsers } from 'react-icons/fi';
+import { FiBook, FiLayers, FiMonitor, FiUsers } from 'react-icons/fi';
 
 import LoggedHeader from '../../components/LoggedHeader';
 
@@ -22,28 +22,40 @@ const Dashboard: React.FC = () => {
           <p>Sinta-se à vontade para explorar os módulos disponíveis abaixo:</p>
         </div>
         <div>
-          <CardContainer>
-            <CardLink to="/monitorings">
-              <FiMonitor />
-              <p>Controle as monitorias do sistema</p>
-              <strong>Monitorias</strong>
-            </CardLink>
-          </CardContainer>
-          <CardContainer>
-            <CardLink to="/presences">
-              <FiLayers />
-              <p>Grave a presença de quem participou da monitoria</p>
-              <strong>Presenças</strong>
-            </CardLink>
-          </CardContainer>
+          <div>
+            <CardContainer>
+              <CardLink to="/presences">
+                <FiLayers />
+                <p>Grave a presença de quem participou da monitoria</p>
+                <strong>Presenças</strong>
+              </CardLink>
+            </CardContainer>
 
-          <CardContainer>
-            <CardLink to="/users">
-              <FiUsers />
-              <p>Controle o acesso dos usuários do sistema</p>
-              <strong>Usuários</strong>
-            </CardLink>
-          </CardContainer>
+            <CardContainer>
+              <CardLink to="/subjects">
+                <FiBook />
+                <p>Acesse os conteúdos extras das monitorias</p>
+                <strong>Conteúdos Extras</strong>
+              </CardLink>
+            </CardContainer>
+          </div>
+          <div>
+            <CardContainer>
+              <CardLink to="/monitorings">
+                <FiMonitor />
+                <p>Controle as monitorias do sistema</p>
+                <strong>Monitorias</strong>
+              </CardLink>
+            </CardContainer>
+
+            <CardContainer>
+              <CardLink to="/users">
+                <FiUsers />
+                <p>Controle o acesso dos usuários do sistema</p>
+                <strong>Usuários</strong>
+              </CardLink>
+            </CardContainer>
+          </div>
         </div>
       </Content>
     </Container>

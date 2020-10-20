@@ -15,12 +15,19 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
 
     max-width: 1120px;
+    width: 100%;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
 
     h1 {
-      margin-top: 24px;
+      margin-top: 8px;
       font-size: 36px;
     }
 
@@ -32,10 +39,6 @@ export const Content = styled.div`
       font-size: 24px;
       line-height: 32px;
     }
-  }
-
-  div:last-child {
-    flex-direction: row;
   }
 `;
 
@@ -50,7 +53,6 @@ export const CardContainer = styled.div`
   width: 300px;
   height: 300px;
 
-  margin-top: 48px;
   border-radius: 12px;
   box-sizing: border-box;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
