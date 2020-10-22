@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiBook, FiLayers, FiMonitor, FiUsers } from 'react-icons/fi';
+import { FiBook, FiLayers, FiList, FiMonitor, FiUsers } from 'react-icons/fi';
 
 import LoggedHeader from '../../components/LoggedHeader';
 
@@ -53,6 +53,14 @@ const Dashboard: React.FC = () => {
                 <FiUsers />
                 <p>Controle o acesso dos usuários do sistema</p>
                 <strong>Usuários</strong>
+              </CardLink>
+            </CardContainer>
+
+            <CardContainer>
+              <CardLink to="/reports">
+                <FiList />
+                <p>Tenha acesso aos relatórios sobre as monitorias</p>
+                <strong>Relatórios</strong>
               </CardLink>
             </CardContainer>
           </div>
