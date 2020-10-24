@@ -1,5 +1,8 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+
+interface CardContainerProps {
+  disabled: boolean;
+}
 
 export const Container = styled.div``;
 
@@ -42,7 +45,7 @@ export const Content = styled.div`
   }
 `;
 
-export const CardContainer = styled.div`
+export const CardContainer = styled.div<CardContainerProps>`
   display: flex;
   flex-direction: column;
 
@@ -63,29 +66,43 @@ export const CardContainer = styled.div`
   &:last-child {
     margin-right: 0px;
   }
-`;
 
-export const CardLink = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
+  ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.7;
+    `}
 
-  width: 100%;
-  height: 100%;
-  padding: 24px;
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 
-  text-decoration: none;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
 
-  color: #232129;
+    text-decoration: none;
 
-  svg {
-    width: 32px;
-    height: 32px;
-  }
+    color: #232129;
 
-  strong {
-    font-size: 24px;
-    color: #d62d2d;
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    strong {
+      font-size: 24px;
+      color: #d62d2d;
+    }
+
+    ${props =>
+      props.disabled &&
+      css`
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+      `}
   }
 `;

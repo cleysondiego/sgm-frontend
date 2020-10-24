@@ -101,6 +101,7 @@ const BeAMonitor: React.FC = () => {
     async (data: SendFormData) => {
       try {
         formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
           name: Yup.string().required('É necessário o nome completo'),
           zip_code: Yup.string().required('Cep é obrigatório'),

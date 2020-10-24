@@ -23,6 +23,7 @@ const Input: React.FC<InputProps> = ({
   containerStyle = {},
   icon: Icon,
   onBlur,
+  disabled = false,
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,8 +40,8 @@ const Input: React.FC<InputProps> = ({
   const handleInputBlur = useCallback(event => {
     setIsFocused(false);
 
-    setIsFilled(!!inputRef.current?.value);
-    onBlur && onBlur(event); // O operador !! transforma em boolean (Se o inputRef ter o value, então true, senão false).
+    setIsFilled(!!inputRef.current?.value); // O operador !! transforma em boolean (Se o inputRef ter o value, então true, senão false).
+    onBlur && onBlur(event);
     // eslint-disable-next-line
   }, []);
 
@@ -58,6 +59,7 @@ const Input: React.FC<InputProps> = ({
       isErrored={!!error}
       isFilled={isFilled}
       isFocused={isFocused}
+      disabled={disabled}
     >
       {Icon && <Icon size={20} />}
       <input
@@ -65,6 +67,7 @@ const Input: React.FC<InputProps> = ({
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
         ref={inputRef}
+        disabled={disabled}
         {...rest}
       />
 

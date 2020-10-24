@@ -42,7 +42,7 @@ const Route: React.FC<RouteProps> = ({
             type: 'error',
             title: 'Erro de permissão!',
             description:
-              'Você não tem permissão para acessar a rota selecionada!',
+              'Você não tem permissão para acessar a rota especificada!',
           });
 
           return <Redirect to={{ pathname: '/dashboard' }} />;
