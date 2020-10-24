@@ -58,6 +58,12 @@ export const Content = styled.div`
         height: 32px;
         color: #d62d2d;
       }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
   }
 `;

@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiBook, FiLayers, FiList, FiMonitor, FiUsers } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 import LoggedHeader from '../../components/LoggedHeader';
+import { useAuth } from '../../hooks/auth';
 
-import { Container, Content, CardLink, CardContainer } from './styles';
+import { Container, Content, CardContainer } from './styles';
 
 const Dashboard: React.FC = () => {
+  const [presenceDisabled, setPresenceDisabled] = useState(false);
+  const [subjectsDisabled, setSubjectsDisabled] = useState(false);
+  const [monitoringsDisabled, setMonitoringsDisabled] = useState(false);
+  const [usersDisabled, setUsersDisabled] = useState(false);
+  const [reportsDisabled, setReportsDisabled] = useState(false);
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    switch (user.user_type) {
+      case 1:
+        setUsersDisabled(true);
+        setReportsDisabled(true);
+        setMonitoringsDisabled(true);
+        break;
+      case 2:
+        setPresenceDisabled(true);
+        setMonitoringsDisabled(true);
+        setUsersDisabled(true);
+        setReportsDisabled(true);
+        break;
+      case 3:
+        setPresenceDisabled(true);
+        setUsersDisabled(true);
+        break;
+      case 4:
+        setPresenceDisabled(true);
+        setSubjectsDisabled(true);
+        break;
+      default:
+        setUsersDisabled(false);
+        setReportsDisabled(false);
+        setMonitoringsDisabled(false);
+        setSubjectsDisabled(false);
+        setPresenceDisabled(false);
+        break;
+    }
+  }, [user.user_type]);
+
   return (
     <Container>
       <LoggedHeader />
@@ -23,45 +64,45 @@ const Dashboard: React.FC = () => {
         </div>
         <div>
           <div>
-            <CardContainer>
-              <CardLink to="/presences">
+            <CardContainer disabled={presenceDisabled}>
+              <Link to="/presences">
                 <FiLayers />
                 <p>Grave a presença de quem participou da monitoria</p>
                 <strong>Presenças</strong>
-              </CardLink>
+              </Link>
             </CardContainer>
 
-            <CardContainer>
-              <CardLink to="/subjects">
+            <CardContainer disabled={subjectsDisabled}>
+              <Link to="/subjects">
                 <FiBook />
                 <p>Acesse os conteúdos extras das monitorias</p>
                 <strong>Conteúdos Extras</strong>
-              </CardLink>
+              </Link>
             </CardContainer>
           </div>
           <div>
-            <CardContainer>
-              <CardLink to="/monitorings">
+            <CardContainer disabled={monitoringsDisabled}>
+              <Link to="/monitorings">
                 <FiMonitor />
                 <p>Controle as monitorias do sistema</p>
                 <strong>Monitorias</strong>
-              </CardLink>
+              </Link>
             </CardContainer>
 
-            <CardContainer>
-              <CardLink to="/users">
+            <CardContainer disabled={usersDisabled}>
+              <Link to="/users">
                 <FiUsers />
                 <p>Controle o acesso dos usuários do sistema</p>
                 <strong>Usuários</strong>
-              </CardLink>
+              </Link>
             </CardContainer>
 
-            <CardContainer>
-              <CardLink to="/reports">
+            <CardContainer disabled={reportsDisabled}>
+              <Link to="/reports">
                 <FiList />
                 <p>Acesse os relatórios sobre as presenças nas monitorias</p>
                 <strong>Relatórios</strong>
-              </CardLink>
+              </Link>
             </CardContainer>
           </div>
         </div>
