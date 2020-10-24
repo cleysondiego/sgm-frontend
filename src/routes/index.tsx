@@ -31,31 +31,76 @@ import Reports from '../pages/Reports';
 
 const Routes: React.FC = () => (
   <Switch>
-    <Route path="/" exact component={Home} />
-    <Route path="/schedule" component={MonitoringSchedule} />
-    <Route path="/monitor" component={BeAMonitor} />
-    <Route path="/login" component={LogIn} />
-    <Route path="/forgot_password" component={ForgotPassword} />
-    <Route path="/reset_password" component={ResetPassword} />
+    <Route path="/" exact component={Home} user_type={[0]} />
+    <Route path="/schedule" component={MonitoringSchedule} user_type={[0]} />
+    <Route path="/monitor" component={BeAMonitor} user_type={[0]} />
+    <Route path="/login" component={LogIn} user_type={[0]} />
+    <Route path="/forgot_password" component={ForgotPassword} user_type={[0]} />
+    <Route path="/reset_password" component={ResetPassword} user_type={[0]} />
 
-    <Route path="/dashboard" component={Dashboard} isPrivate />
-    <Route path="/profile" component={Profile} isPrivate />
+    <Route
+      path="/dashboard"
+      component={Dashboard}
+      isPrivate
+      user_type={[1, 2, 3, 4]}
+    />
+    <Route
+      path="/profile"
+      component={Profile}
+      isPrivate
+      user_type={[1, 2, 3, 4]}
+    />
 
-    <Route path="/monitorings" component={Monitoring} isPrivate />
-    <Route path="/show_monitoring" component={ShowMonitoring} isPrivate />
-    <Route path="/create_monitoring" component={CreateMonitoring} isPrivate />
+    <Route
+      path="/monitorings"
+      component={Monitoring}
+      isPrivate
+      user_type={[4, 3]}
+    />
+    <Route
+      path="/show_monitoring"
+      component={ShowMonitoring}
+      isPrivate
+      user_type={[4, 3]}
+    />
+    <Route
+      path="/create_monitoring"
+      component={CreateMonitoring}
+      isPrivate
+      user_type={[4, 3]}
+    />
 
-    <Route path="/users" component={Users} isPrivate />
-    <Route path="/create_user" component={CreateUser} isPrivate />
-    <Route path="/show_user" component={ShowUser} isPrivate />
+    <Route path="/users" component={Users} isPrivate user_type={[4]} />
+    <Route
+      path="/create_user"
+      component={CreateUser}
+      isPrivate
+      user_type={[4]}
+    />
+    <Route path="/show_user" component={ShowUser} isPrivate user_type={[4]} />
 
-    <Route path="/presences" component={Presences} isPrivate />
+    <Route path="/presences" component={Presences} isPrivate user_type={[1]} />
 
-    <Route path="/subjects" component={Subjects} isPrivate />
-    <Route path="/create_subjects" component={CreateSubject} isPrivate />
-    <Route path="/show_subjects" component={ShowSubjects} isPrivate />
+    <Route
+      path="/subjects"
+      component={Subjects}
+      isPrivate
+      user_type={[3, 2, 1]}
+    />
+    <Route
+      path="/create_subjects"
+      component={CreateSubject}
+      isPrivate
+      user_type={[3, 2]}
+    />
+    <Route
+      path="/show_subjects"
+      component={ShowSubjects}
+      isPrivate
+      user_type={[3, 2, 1]}
+    />
 
-    <Route path="/reports" component={Reports} isPrivate />
+    <Route path="/reports" component={Reports} isPrivate user_type={[4]} />
   </Switch>
 );
 
