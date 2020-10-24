@@ -1,110 +1,92 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
+import { useToast } from '../../hooks/toast';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-import { Container, Body, Content, AnimatedContainer } from './styles';
+import { Container, Content } from './styles';
+import api from '../../services/api';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar_url: string;
+}
+
+interface Monitoring {
+  id: string;
+  name: string;
+  isAvailable: boolean;
+  room: string;
+  schedule: string;
+  day: string;
+  teacher: User;
+  monitor: User;
+}
 
 const Schedule: React.FC = () => {
+  const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
+
+  const history = useHistory();
+  const { addToast } = useToast();
+
+  useEffect(() => {
+    const FetchData = async (): Promise<void> => {
+      try {
+        const response = await api.get<Monitoring[]>('/monitoring');
+
+        setMonitorings(response.data);
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao carregar agenda de monitorias',
+          description:
+            'Ocorreu um erro ao recuperar a agenda monitorias, por favor, tente novamente!',
+        });
+
+        history.goBack();
+      }
+    };
+
+    FetchData();
+  }, [addToast, history]);
+
   return (
     <Container>
       <Header />
-      <Body>
-        <Content>
-          <AnimatedContainer>
-            <h1>Agenda de Monitorias</h1>
-            <table>
-              <tr>
-                <th />
-                <th>Segunda-Feira</th>
-                <th>Terça-Feira</th>
-                <th>Quarta-Feira</th>
-                <th>Quinta-Feira</th>
-                <th>Sexta-Feira</th>
-                <th>Sábado</th>
+
+      <Content>
+        <h1>Agenda de Monitorias</h1>
+        <table>
+          <tbody>
+            <tr>
+              <th>Monitoria</th>
+              <th>Dia(s)</th>
+              <th>Horário</th>
+              <th>Sala</th>
+              <th>Professor</th>
+              <th>Monitor</th>
+            </tr>
+            {monitorings.map(monitoring => (
+              <tr key={monitoring.id}>
+                <td>{monitoring.name}</td>
+                <td>
+                  {monitoring.day === 'todosdias'
+                    ? 'Seg à Sex'
+                    : monitoring.day}
+                </td>
+                <td>{monitoring.schedule}</td>
+                <td>{monitoring.room}</td>
+                <td>{monitoring.teacher.name}</td>
+                <td>{monitoring.monitor.name}</td>
               </tr>
-              <tr>
-                <td>18:00</td>
-                <td>
-                  Matemática
-                  <br />
-                  <br />
-                  Canal 5
-                </td>
-                <td>
-                  Inglês
-                  <br />
-                  <br />
-                  Canal 8
-                </td>
-                <td>
-                  Lógica de Programação
-                  <br />
-                  <br />
-                  Canal 2
-                </td>
-                <td>
-                  Contabilidade
-                  <br />
-                  <br />
-                  Canal 7
-                </td>
-                <td>
-                  Programação em Microinformática
-                  <br />
-                  <br />
-                  Canal 1
-                </td>
-                <td>
-                  Ética e Responsabilidade
-                  <br />
-                  <br />
-                  Canal 3
-                </td>
-              </tr>
-              <tr>
-                <td>18:30</td>
-                <td>
-                  Ética e Responsabilidade
-                  <br />
-                  <br />
-                  Canal 3
-                </td>
-                <td>
-                  Lógica de Programação
-                  <br />
-                  <br />
-                  Canal 2
-                </td>
-                <td>
-                  Contabilidade
-                  <br />
-                  <br />
-                  Canal 7
-                </td>
-                <td>
-                  Matemática
-                  <br />
-                  <br />
-                  Canal 5
-                </td>
-                <td>
-                  Programação em Microinformática
-                  <br />
-                  <br />
-                  Canal 1
-                </td>
-                <td>
-                  Inglês
-                  <br />
-                  <br />
-                  Canal 8
-                </td>
-              </tr>
-            </table>
-          </AnimatedContainer>
-        </Content>
-      </Body>
+            ))}
+          </tbody>
+        </table>
+      </Content>
+
       <Footer />
     </Container>
   );
