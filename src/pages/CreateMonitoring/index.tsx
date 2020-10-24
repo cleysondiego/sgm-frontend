@@ -271,7 +271,9 @@ const CreateMonitoring: React.FC = () => {
             </select>
           </div>
 
-          <Button type="submit">Criar nova monitoria</Button>
+          <Button type="submit" isLogged>
+            Criar nova monitoria
+          </Button>
         </Form>
       </Content>
     </Container>

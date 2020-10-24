@@ -2,11 +2,19 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import { Container } from './styles';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+// type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  isLogged?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  isLogged = false,
+  children,
+  ...rest
+}) => {
   return (
-    <Container type="button" {...rest}>
+    <Container type="button" isLogged={isLogged} {...rest}>
       {children}
     </Container>
   );
