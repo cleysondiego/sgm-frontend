@@ -359,13 +359,13 @@ const ShowMonitoring: React.FC = () => {
               onChange={handleSelectDay}
               disabled={inputDisabled}
             >
-              <option value="monday">Segunda-Feira</option>
-              <option value="tuesday">Terça-Feira</option>
-              <option value="wednesday">Quarta-Feira</option>
-              <option value="thursday">Quinta-Feira</option>
-              <option value="friday">Sexta-Feira</option>
-              <option value="saturday">Sábado</option>
-              <option value="alldays">De seg à sab</option>
+              <option value="Segunda-Feira">Segunda-Feira</option>
+              <option value="Terça-Feira">Terça-Feira</option>
+              <option value="Quarta-Feira">Quarta-Feira</option>
+              <option value="Quinta-Feira">Quinta-Feira</option>
+              <option value="Sexta-Feira">Sexta-Feira</option>
+              <option value="Sábado">Sábado</option>
+              <option value="todosdias">De seg à sab</option>
             </select>
           </div>
         </Form>

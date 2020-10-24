@@ -1,92 +1,61 @@
 import styled, { keyframes } from 'styled-components';
 
-export const Container = styled.div`
-  position: relative;
-  min-height: 100vh;
-`;
+export const Container = styled.div``;
 
-export const Body = styled.div`
-  padding-top: 80px;
-  padding-bottom: 263px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const appearFromLeft = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
-`;
-
-const appearFromLeft = keyframes`
-from{
-  opacity: 0;
-  transform: translateX(-50px);
-}
-to{
-  opacity: 1;
-  transform: translateX(0);
-}
-`;
-
-export const AnimatedContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
   animation: ${appearFromLeft} 1s;
+  padding-top: 80px;
+  padding-bottom: 263px;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-
-  h1 {
-    margin-top: 35px;
-    font-size: 60px;
-  }
+  width: 100%;
+  margin-top: 32px;
 
   table {
-    margin: auto;
-    margin-top: 100px;
-    margin-bottom: 100px;
-  }
+    margin-top: 32px;
+    max-width: 1120px;
+    width: 100%;
 
-  table,
-  th,
-  td {
-    border: 1px solid black;
-  }
+    tbody {
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
 
-  th,
-  td {
-    padding: 5px;
-  }
+      td,
+      th {
+        border-bottom: 1px solid #999;
+        padding: 8px;
+        text-align: left;
+      }
 
-  th {
-    font-size: 30px;
-  }
+      td {
+        a {
+          color: #000;
+          text-decoration: none;
 
-  td {
-    font-size: 25px;
-    min-width: 190px;
-    vertical-align: bottom;
+          &:hover {
+            opacity: 0.8;
+          }
+        }
 
-    &:first-child {
-      font-size: 30px;
-      font-weight: bold;
-      min-width: 0;
-      vertical-align: middle;
+        button:last-child {
+          margin-left: 8px;
+        }
+      }
     }
-  }
-
-  @media screen and (max-width: 844px) {
-    padding-top: 0;
-    padding-bottom: 0;
   }
 `;
