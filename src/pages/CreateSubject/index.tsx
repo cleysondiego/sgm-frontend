@@ -160,7 +160,9 @@ const CreateSubject: React.FC = () => {
 
             <input type="file" id="avatar" onChange={handleFileChange} />
 
-            <Button type="submit">Salvar Arquivo</Button>
+            <Button type="submit" isLogged>
+              Salvar Arquivo
+            </Button>
           </Form>
         </div>
       </Content>

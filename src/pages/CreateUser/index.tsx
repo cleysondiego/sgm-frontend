@@ -120,7 +120,9 @@ const CreateUser: React.FC = () => {
             </select>
           </div>
 
-          <Button type="submit">Criar usuário</Button>
+          <Button type="submit" isLogged>
+            Criar usuário
+          </Button>
         </Form>
       </Content>
     </Container>

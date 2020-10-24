@@ -77,7 +77,9 @@ const Presences: React.FC = () => {
             placeholder="Digite o número de RA do aluno"
           />
 
-          <Button type="submit">Registrar Presença</Button>
+          <Button type="submit" isLogged>
+            Registrar Presença
+          </Button>
         </Form>
       </Content>
     </Container>
