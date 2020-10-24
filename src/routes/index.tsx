@@ -27,6 +27,8 @@ import Subjects from '../pages/Subjects';
 import ShowSubjects from '../pages/ShowSubjects';
 import CreateSubject from '../pages/CreateSubject';
 
+import Reports from '../pages/Reports';
+
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Home} />
@@ -52,6 +54,8 @@ const Routes: React.FC = () => (
     <Route path="/subjects" component={Subjects} isPrivate />
     <Route path="/create_subjects" component={CreateSubject} isPrivate />
     <Route path="/show_subjects" component={ShowSubjects} isPrivate />
+
+    <Route path="/reports" component={Reports} isPrivate />
   </Switch>
 );
 
