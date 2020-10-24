@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
             <CardContainer>
               <CardLink to="/reports">
                 <FiList />
-                <p>Tenha acesso aos relatórios sobre as monitorias</p>
+                <p>Acesse os relatórios sobre as presenças nas monitorias</p>
                 <strong>Relatórios</strong>
               </CardLink>
             </CardContainer>

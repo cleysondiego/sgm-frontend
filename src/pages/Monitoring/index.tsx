@@ -32,7 +32,7 @@ const Monitoring: React.FC = () => {
             'Ocorreu um erro ao recuperar as monitorias disponiveis, por favor, tente novamente!',
         });
 
-        history.push('/dashboard');
+        history.goBack();
       }
     };
 
