@@ -144,7 +144,9 @@ const CreateSubject: React.FC = () => {
 
             <Input name="url" icon={FiLink} placeholder="Link" />
 
-            <Button type="submit">Salvar Link</Button>
+            <Button type="submit" isLogged>
+              Salvar Link
+            </Button>
           </Form>
         </div>
         <div>
