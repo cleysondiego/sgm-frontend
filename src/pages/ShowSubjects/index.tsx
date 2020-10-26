@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-
 import { FiPlusCircle, FiTrash } from 'react-icons/fi';
+import SweetAlert from 'react-bootstrap-sweetalert';
+
 import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
 import BackHeader from '../../components/BackHeader';
@@ -17,6 +18,7 @@ interface Subject {
 
 const ShowSubjects: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   const location = useLocation();
   const { addToast } = useToast();
@@ -49,6 +51,7 @@ const ShowSubjects: React.FC = () => {
   const handleDelete = useCallback(
     async (subject: Subject) => {
       try {
+        setShowAlert(!showAlert);
         await api.delete<Subject>(`subject/${subject.id}`);
 
         const subjectsArray = subjects.filter(item => item.id !== subject.id);
@@ -68,7 +71,7 @@ const ShowSubjects: React.FC = () => {
         });
       }
     },
-    [addToast, subjects],
+    [addToast, subjects, showAlert],
   );
 
   const handleCreateSubject = useCallback(() => {
@@ -118,9 +121,25 @@ const ShowSubjects: React.FC = () => {
                   ) : undefined}
                 </td>
                 <td>
-                  <button type="button" onClick={() => handleDelete(subject)}>
+                  <button
+                    type="button"
+                    onClick={() => setShowAlert(!showAlert)}
+                  >
                     <FiTrash />
                   </button>
+                  <SweetAlert
+                    show={showAlert}
+                    warning
+                    showCancel
+                    title="Deletar Material"
+                    confirmBtnText="Sim, desejo deletar!"
+                    cancelBtnText="Cancelar"
+                    confirmBtnBsStyle="danger"
+                    onConfirm={() => handleDelete(subject)}
+                    onCancel={() => setShowAlert(!showAlert)}
+                  >
+                    Você tem certeza que deseja deletar esse material?
+                  </SweetAlert>
                 </td>
               </tr>
             ))}

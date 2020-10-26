@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FiEdit, FiPlusCircle, FiTrash } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
+import { FiEdit, FiPlusCircle, FiTrash } from 'react-icons/fi';
+import SweetAlert from 'react-bootstrap-sweetalert';
+
 import BackHeader from '../../components/BackHeader';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
@@ -14,6 +16,7 @@ interface Monitoring {
 
 const Monitoring: React.FC = () => {
   const [monitorings, setMonitorings] = useState<Monitoring[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   const history = useHistory();
   const { addToast } = useToast();
@@ -49,6 +52,7 @@ const Monitoring: React.FC = () => {
   const handleDelete = useCallback(
     async (monitoring: Monitoring) => {
       try {
+        setShowAlert(!showAlert);
         await api.delete<Monitoring>(`monitoring/${monitoring.id}`);
 
         const monitoringsArray = monitorings.filter(
@@ -70,7 +74,7 @@ const Monitoring: React.FC = () => {
         });
       }
     },
-    [addToast, monitorings],
+    [addToast, monitorings, showAlert],
   );
 
   const handleCreateMonitoring = useCallback(() => {
@@ -104,10 +108,23 @@ const Monitoring: React.FC = () => {
 
                   <button
                     type="button"
-                    onClick={() => handleDelete(monitoring)}
+                    onClick={() => setShowAlert(!showAlert)}
                   >
                     <FiTrash />
                   </button>
+                  <SweetAlert
+                    show={showAlert}
+                    warning
+                    showCancel
+                    title="Deletar Monitoria"
+                    confirmBtnText="Sim, desejo deletar!"
+                    cancelBtnText="Cancelar"
+                    confirmBtnBsStyle="danger"
+                    onConfirm={() => handleDelete(monitoring)}
+                    onCancel={() => setShowAlert(!showAlert)}
+                  >
+                    Você tem certeza que deseja deletar essa monitoria?
+                  </SweetAlert>
                 </td>
               </tr>
             ))}
