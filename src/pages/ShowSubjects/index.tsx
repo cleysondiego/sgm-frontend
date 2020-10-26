@@ -4,6 +4,7 @@ import { FiPlusCircle, FiTrash } from 'react-icons/fi';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
 import { useToast } from '../../hooks/toast';
+import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import BackHeader from '../../components/BackHeader';
 
@@ -23,6 +24,7 @@ const ShowSubjects: React.FC = () => {
   const location = useLocation();
   const { addToast } = useToast();
   const history = useHistory();
+  const { user } = useAuth();
 
   const monitoring_id = location.search.replace('?id=', '');
 
@@ -82,9 +84,12 @@ const ShowSubjects: React.FC = () => {
     <Container>
       <BackHeader to="/subjects" />
       <Content>
-        <button type="button" onClick={handleCreateSubject}>
-          <FiPlusCircle />
-        </button>
+        {user.user_type === 3 ||
+          (user.user_type === 2 && (
+            <button type="button" onClick={handleCreateSubject}>
+              <FiPlusCircle />
+            </button>
+          ))}
         <table>
           <tbody>
             <tr>
@@ -121,25 +126,30 @@ const ShowSubjects: React.FC = () => {
                   ) : undefined}
                 </td>
                 <td>
-                  <button
-                    type="button"
-                    onClick={() => setShowAlert(!showAlert)}
-                  >
-                    <FiTrash />
-                  </button>
-                  <SweetAlert
-                    show={showAlert}
-                    warning
-                    showCancel
-                    title="Deletar Material"
-                    confirmBtnText="Sim, desejo deletar!"
-                    cancelBtnText="Cancelar"
-                    confirmBtnBsStyle="danger"
-                    onConfirm={() => handleDelete(subject)}
-                    onCancel={() => setShowAlert(!showAlert)}
-                  >
-                    Você tem certeza que deseja deletar esse material?
-                  </SweetAlert>
+                  {user.user_type === 3 ||
+                    (user.user_type === 2 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setShowAlert(!showAlert)}
+                        >
+                          <FiTrash />
+                        </button>
+                        <SweetAlert
+                          show={showAlert}
+                          warning
+                          showCancel
+                          title="Deletar Material"
+                          confirmBtnText="Sim, desejo deletar!"
+                          cancelBtnText="Cancelar"
+                          confirmBtnBsStyle="danger"
+                          onConfirm={() => handleDelete(subject)}
+                          onCancel={() => setShowAlert(!showAlert)}
+                        >
+                          Você tem certeza que deseja deletar esse material?
+                        </SweetAlert>
+                      </>
+                    ))}
                 </td>
               </tr>
             ))}
