@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Redirect, Switch } from 'react-router-dom';
 
 import Route from './Route';
 
@@ -28,6 +28,8 @@ import ShowSubjects from '../pages/ShowSubjects';
 import CreateSubject from '../pages/CreateSubject';
 
 import Reports from '../pages/Reports';
+
+import NotFound from '../pages/NotFound';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -101,6 +103,9 @@ const Routes: React.FC = () => (
     />
 
     <Route path="/reports" component={Reports} isPrivate user_type={[4]} />
+
+    <Route path="/404" component={NotFound} user_type={[0]} />
+    <Redirect to="/404" />
   </Switch>
 );
 
