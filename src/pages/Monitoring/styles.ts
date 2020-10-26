@@ -55,6 +55,14 @@ export const Content = styled.div`
         button:last-child {
           margin-left: 8px;
         }
+
+        div a:last-of-type {
+          background-color: #dc3545;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          border-radius: 0.3rem;
+          margin-left: 15px;
+        }
       }
     }
   }

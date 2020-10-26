@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
 import { FiEdit, FiPlusCircle, FiTrash } from 'react-icons/fi';
+import SweetAlert from 'react-bootstrap-sweetalert';
+
 import { useToast } from '../../hooks/toast';
 import BackHeader from '../../components/BackHeader';
+import api from '../../services/api';
 
 import { Container, Content } from './styles';
-import api from '../../services/api';
 
 interface User {
   id: string;
@@ -16,6 +17,7 @@ interface User {
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   const history = useHistory();
   const { addToast } = useToast();
@@ -57,6 +59,7 @@ const Users: React.FC = () => {
   const handleDelete = useCallback(
     async (user: User) => {
       try {
+        setShowAlert(!showAlert);
         await api.delete<User>(`users/${user.id}`);
 
         const usersArray = users.filter(item => item.id !== user.id);
@@ -76,7 +79,7 @@ const Users: React.FC = () => {
         });
       }
     },
-    [addToast, users],
+    [addToast, users, showAlert],
   );
 
   return (
@@ -104,9 +107,26 @@ const Users: React.FC = () => {
                     <FiEdit />
                   </button>
 
-                  <button type="button" onClick={() => handleDelete(user)}>
+                  <button
+                    type="button"
+                    onClick={() => setShowAlert(!showAlert)}
+                  >
                     <FiTrash />
                   </button>
+
+                  <SweetAlert
+                    show={showAlert}
+                    warning
+                    showCancel
+                    title="Deletar Usuário"
+                    confirmBtnText="Sim, desejo deletar!"
+                    cancelBtnText="Cancelar"
+                    confirmBtnBsStyle="danger"
+                    onConfirm={() => handleDelete(user)}
+                    onCancel={() => setShowAlert(!showAlert)}
+                  >
+                    Você tem certeza que deseja deletar esse Usuário?
+                  </SweetAlert>
                 </td>
               </tr>
             ))}
