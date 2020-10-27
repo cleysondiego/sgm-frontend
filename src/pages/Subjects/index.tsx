@@ -2,14 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useToast } from '../../hooks/toast';
+import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import BackHeader from '../../components/BackHeader';
 
 import { Container, Content } from './styles';
 
+interface User {
+  id: string;
+  name: string;
+}
+
 interface Monitoring {
   id: string;
   name: string;
+  monitor: User;
 }
 
 const Subjects: React.FC = () => {
@@ -17,6 +24,7 @@ const Subjects: React.FC = () => {
 
   const history = useHistory();
   const { addToast } = useToast();
+  const { user } = useAuth();
 
   useEffect(() => {
     const FetchData = async (): Promise<void> => {
@@ -49,15 +57,17 @@ const Subjects: React.FC = () => {
             <tr>
               <th>Monitorias</th>
             </tr>
-            {monitorings.map(monitoring => (
-              <tr key={monitoring.id}>
-                <td>
-                  <Link to={`/show_subjects?id=${monitoring.id}`}>
-                    {monitoring.name}
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            {monitorings.map(monitoring => {
+              return monitoring.monitor?.id === user.id ? (
+                <tr key={monitoring.id}>
+                  <td>
+                    <Link to={`/show_subjects?id=${monitoring.id}`}>
+                      {monitoring.name}
+                    </Link>
+                  </td>
+                </tr>
+              ) : undefined;
+            })}
           </tbody>
         </table>
       </Content>
