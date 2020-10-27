@@ -1,29 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
-  position: relative;
   min-height: 100vh;
-`;
-
-export const Title = styled.h1`
-  font-size: 48px;
-  color: #3a3a3a;
-`;
-
-export const Body = styled.div`
-  padding-top: 80px;
-  padding-bottom: 263px;
   display: flex;
-  justify-content: center;
   align-items: center;
-`;
-
-export const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 1500px;
-  text-align: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  flex-direction: column;
 `;
 
 const appearFromLeft = keyframes`
@@ -37,13 +19,14 @@ const appearFromLeft = keyframes`
   }
 `;
 
-export const AnimatedContainer = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: row;
-  width: 1500px;
-  text-align: center;
   justify-content: space-around;
+  text-align: center;
   animation: ${appearFromLeft} 1s;
+  width: 1500px;
+  height: 100%;
 
   div {
     display: flex;

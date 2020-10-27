@@ -2,18 +2,14 @@ import styled from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  align-items: center;
-  padding: 20px 10px;
-  background: #283336;
+  margin-top: auto;
 
-  @media screen and (max-width: 877px) {
-    position: relative;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #283336;
+  height: 252px;
+  width: 100%;
 `;
 
 export const FooterStyled = styled.footer`

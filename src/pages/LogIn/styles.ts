@@ -2,8 +2,10 @@ import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
-  position: relative;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Title = styled.h1`
@@ -13,9 +15,6 @@ export const Title = styled.h1`
 
 export const Content = styled.div`
   display: flex;
-
-  padding-top: 80px;
-  padding-bottom: 263px;
 `;
 
 const appearFromLeft = keyframes`
