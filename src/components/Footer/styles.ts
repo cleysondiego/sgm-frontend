@@ -92,10 +92,6 @@ export const GroupColumn = styled.div`
 
   @media screen and (max-width: 877px) {
     flex-direction: column;
-
-    &:first-child {
-      margin-right: 100px;
-    }
   }
 
   @media screen and (max-width: 487px) {

@@ -28,7 +28,7 @@ const Home: React.FC = () => {
             Saiba mais
           </a>
         </div>
-        <img src={HomeImage} alt="Book of Knowledge" width="600" height="600" />
+        <img src={HomeImage} alt="Book of Knowledge" width="500" height="500" />
       </Content>
 
       <Footer />
