@@ -17,6 +17,7 @@ interface Monitoring {
   id: string;
   name: string;
   monitor: User;
+  teacher: User;
 }
 
 const Subjects: React.FC = () => {
@@ -58,7 +59,18 @@ const Subjects: React.FC = () => {
               <th>Monitorias</th>
             </tr>
             {monitorings.map(monitoring => {
-              return monitoring.monitor?.id === user.id ? (
+              // eslint-disable-next-line no-nested-ternary
+              return user.user_type === 1 ? (
+                monitoring.monitor?.id === user.id ? (
+                  <tr key={monitoring.id}>
+                    <td>
+                      <Link to={`/show_subjects?id=${monitoring.id}`}>
+                        {monitoring.name}
+                      </Link>
+                    </td>
+                  </tr>
+                ) : undefined
+              ) : monitoring.teacher?.id === user.id ? (
                 <tr key={monitoring.id}>
                   <td>
                     <Link to={`/show_subjects?id=${monitoring.id}`}>
