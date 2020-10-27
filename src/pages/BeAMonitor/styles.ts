@@ -1,14 +1,14 @@
 import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
-  position: relative;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const Content = styled.div`
   display: flex;
-
-  padding-top: 80px;
 `;
 
 const appearFromLeft = keyframes`

@@ -7,13 +7,12 @@ interface ListProps {
 
 export const Container = styled.nav`
   display: flex;
-  position: absolute;
-  top: 0;
   width: 100%;
   height: 64px;
   background: #283336;
   align-items: center;
   font-size: 1.2rem;
+  margin-bottom: auto;
 
   @media screen and (max-width: 844px) {
     display: block;
@@ -26,10 +25,6 @@ export const Container = styled.nav`
     &:hover {
       transition: 250ms;
     }
-  }
-
-  @media screen and (max-width: 844px) {
-    position: relative;
   }
 `;
 
@@ -75,7 +70,7 @@ export const List = styled.ul<ListProps>`
     flex-direction: column;
     position: absolute;
     width: 100%;
-    top: 80px;
+    margin-top: 32px;
 
     ${props =>
       props.isClicked &&

@@ -1,6 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const appearFromLeft = keyframes`
   from {
@@ -19,10 +24,11 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${appearFromLeft} 1s;
-  padding-top: 80px;
-  padding-bottom: 263px;
 
   width: 100%;
+
+  flex: 1;
+
   margin-top: 32px;
 
   table {
