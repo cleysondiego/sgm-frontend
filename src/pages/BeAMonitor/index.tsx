@@ -11,6 +11,7 @@ import {
   FiPhone,
   FiUser,
 } from 'react-icons/fi';
+import InputMask from 'react-input-mask';
 
 import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
@@ -231,12 +232,16 @@ const BeAMonitor: React.FC = () => {
             </div>
 
             <div>
-              <Input
-                onBlur={handleBlurZipCode}
-                name="zip_code"
-                icon={FiMapPin}
-                placeholder="Cep"
-              />
+              <InputMask mask="99999-999" onBlur={handleBlurZipCode}>
+                {() => (
+                  <Input
+                    onBlur={handleBlurZipCode}
+                    name="zip_code"
+                    icon={FiMapPin}
+                    placeholder="Cep"
+                  />
+                )}
+              </InputMask>
 
               <Input
                 name="street"
@@ -273,7 +278,11 @@ const BeAMonitor: React.FC = () => {
 
             <div>
               <Input name="email" icon={FiMail} placeholder="Email" />
-              <Input name="phone" icon={FiPhone} placeholder="Contato" />
+              <InputMask mask="(99) 99999-9999">
+                {() => (
+                  <Input name="phone" icon={FiPhone} placeholder="Contato" />
+                )}
+              </InputMask>
             </div>
 
             <div>
