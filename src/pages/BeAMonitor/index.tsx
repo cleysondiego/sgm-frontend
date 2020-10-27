@@ -208,11 +208,14 @@ const BeAMonitor: React.FC = () => {
 
             <div>
               <select value={selectedMonitoring.id} onChange={handleSelect}>
-                {monitorings.map(monitoring => (
-                  <option key={monitoring.id} value={monitoring.id}>
-                    {monitoring.name}
-                  </option>
-                ))}
+                {monitorings.map(
+                  monitoring =>
+                    monitoring.teacher?.name && (
+                      <option key={monitoring.id} value={monitoring.id}>
+                        {monitoring.name}
+                      </option>
+                    ),
+                )}
               </select>
 
               <Input
