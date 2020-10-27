@@ -69,20 +69,23 @@ const Schedule: React.FC = () => {
               <th>Professor</th>
               <th>Monitor</th>
             </tr>
-            {monitorings.map(monitoring => (
-              <tr key={monitoring.id}>
-                <td>{monitoring.name}</td>
-                <td>
-                  {monitoring.day === 'todosdias'
-                    ? 'Seg à Sex'
-                    : monitoring.day}
-                </td>
-                <td>{monitoring.schedule}</td>
-                <td>{monitoring.room}</td>
-                <td>{monitoring.teacher.name}</td>
-                <td>{monitoring.monitor.name}</td>
-              </tr>
-            ))}
+            {monitorings.map(
+              monitoring =>
+                monitoring.isAvailable && (
+                  <tr key={monitoring.id}>
+                    <td>{monitoring.name}</td>
+                    <td>
+                      {monitoring.day === 'todosdias'
+                        ? 'Seg à Sex'
+                        : monitoring.day}
+                    </td>
+                    <td>{monitoring.schedule}</td>
+                    <td>{monitoring.room}</td>
+                    <td>{monitoring.teacher.name}</td>
+                    <td>{monitoring.monitor.name}</td>
+                  </tr>
+                ),
+            )}
           </tbody>
         </table>
       </Content>
