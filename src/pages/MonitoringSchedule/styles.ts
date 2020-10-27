@@ -31,6 +31,11 @@ export const Content = styled.div`
 
   margin-top: 32px;
 
+  h1 {
+    font-size: 30px;
+    color: #900;
+  }
+
   table {
     margin-top: 32px;
     max-width: 1120px;
