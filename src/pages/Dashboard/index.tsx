@@ -32,6 +32,8 @@ const Dashboard: React.FC = () => {
       case 3:
         setPresenceDisabled(true);
         setUsersDisabled(true);
+        setReportsDisabled(true);
+        setSubjectsDisabled(true);
         break;
       case 4:
         setPresenceDisabled(true);

@@ -83,23 +83,18 @@ const Routes: React.FC = () => (
 
     <Route path="/presences" component={Presences} isPrivate user_type={[1]} />
 
-    <Route
-      path="/subjects"
-      component={Subjects}
-      isPrivate
-      user_type={[3, 2, 1]}
-    />
+    <Route path="/subjects" component={Subjects} isPrivate user_type={[2, 1]} />
     <Route
       path="/create_subjects"
       component={CreateSubject}
       isPrivate
-      user_type={[3, 2]}
+      user_type={[2]}
     />
     <Route
       path="/show_subjects"
       component={ShowSubjects}
       isPrivate
-      user_type={[3, 2, 1]}
+      user_type={[2, 1]}
     />
 
     <Route path="/reports" component={Reports} isPrivate user_type={[4]} />
